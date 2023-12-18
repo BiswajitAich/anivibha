@@ -1,0 +1,91 @@
+.episodeBtnsDiv,
+.serverBtnsDiv,
+.episodeGenres,
+.otherName,
+.releaseDate,
+.status,
+.subOrDub,
+.totalEpisodes,
+.description
+{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 5%;
+    flex-wrap: wrap;
+    padding: 10px 5%;
+    max-height: 350px;
+    overflow-y: auto;
+    background-color: black;
+}
+
+.episodeBtnsDiv button {
+    padding: 2px 0px;
+    margin-top: 10px;
+    margin-left: 5%;
+    min-width: 60px;
+    width: fit-content;
+    max-width: 80px;
+    border: 0;
+    background-color: black;
+    color: bisque;
+    box-shadow: 0px 0px 8px #ff82f0;
+    font-size: 20px;
+}
+
+.serverBtnsDiv button {
+    border: 2px;
+    background-color: black;
+    color: rgb(254, 255, 196);
+    background-color: black;
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-left: 5%;
+    font-size: 15px;
+    border-color: black;
+    box-shadow: 0px 0px 8px rgba(255, 0, 170, 0.5);
+
+}
+
+.episodeGenres {
+    background: rgb(0, 0, 0);
+    max-height: 100px;
+    overflow-y: auto;
+    color: rgba(127, 255, 212, 0.8);
+}
+
+
+.otherName{
+    color: hsl(261, 100%, 84%);
+}
+
+.releaseDate{
+    color: hsl(307, 100%, 84%);
+
+}
+
+.status{
+    color: hsl(194, 100%, 84%);
+
+}
+
+.subOrDub{
+    color: hsl(152, 100%, 84%);
+
+}
+
+.totalEpisodes{
+    color: hsl(81, 100%, 84%);
+
+}
+
+.description{
+    color: hsl(29, 100%, 84%);
+
+}
+
+.ps{
+    padding: 10px 5%;
+    background: linear-gradient(90deg, black, transparent, transparent, rgba(255, 0, 170, 0.5));
+}

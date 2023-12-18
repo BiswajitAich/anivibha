@@ -1,6 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import style from "../../css/watch.module.css"
+
 interface episodeDataTypes {
     map: any
     id: string,
@@ -25,11 +27,11 @@ const Watch = () => {
         const fetchData = async () => {
             try {
                 const Id = encodeURIComponent(params.id as string);
-                const response = await fetch(`https://anivibha.vercel.app/api/anime/FetchInfo?id=${Id}`);
+                const response = await fetch(`${window.location.origin}/api/anime/FetchInfo?id=${Id}`);
                 const data = await response.json();
                 setInfo(data);
                 // console.log("info", data);
-                playEpisode(data.episodes[data.episodes.length-1].id);
+                playEpisode(data.episodes[data.episodes.length - 1].id);
             } catch (error) {
                 console.error(error);
             };
@@ -41,7 +43,7 @@ const Watch = () => {
         try {
             const episodeId = id as string;
             const response = await fetch(
-                `https://anivibha.vercel.app/api/anime/FetchEpisodeServers?episodeId=${episodeId}`,
+                `${window.location.origin}/api/anime/FetchEpisodeServers?episodeId=${episodeId}`,
             );
             const data = await response.json();
             console.log(data)
@@ -52,7 +54,7 @@ const Watch = () => {
         }
     };
 
-   
+
 
     const changeServer = (server: string) => {
         setSelectedServer(server);
@@ -61,25 +63,29 @@ const Watch = () => {
     return (
         <div>
 
-                <iframe
-                    referrerPolicy="no-referrer"
-                    width="100%"
-                    height="100%"
-                    style={{ minWidth: '100vw', aspectRatio: '7/5', backgroundColor: 'black'}}
-                    src={selectedServer}
-                    allowFullScreen
-                    title="Watch"
-                ></iframe>
+            <iframe
+                referrerPolicy="no-referrer"
+                width="100%"
+                height="100%"
+                style={{ minWidth: '100vw', aspectRatio: '7/5', backgroundColor: 'black', border: "0" }}
+                src={selectedServer}
+                allowFullScreen
+                title="Watch now"
+                sandbox="allow-same-origin allow-scripts"
+                allow="encrypted-media; gyroscope; picture-in-picture"
+            >Sorry 😭 !</iframe>
 
-                    <h1>{info.title}</h1>
-
-            {info.episodes.map((episode: episodeDataTypes) => (
-                <button key={episode.id} onClick={() => playEpisode(episode.id)}>
-                    <div>{episode.number}</div>
-                </button>
-            ))}
-            <div>
-                <h2>Servers</h2>
+            <h1>{info.title}</h1>
+            <p className={style.ps}>Episodes:</p>
+            <div className={style.episodeBtnsDiv}>
+                {info.episodes.map((episode: episodeDataTypes) => (
+                    <button key={episode.id} onClick={() => playEpisode(episode.id)}>
+                        <div>{episode.number}</div>
+                    </button>
+                ))}
+            </div>
+            <p className={style.ps}>Servers:</p>
+            <div className={style.serverBtnsDiv}>
                 {servers.map((server: episodeDataTypes, idx: number) => (
                     <button key={idx}
                         onClick={() => changeServer(server.url)}>
@@ -87,16 +93,34 @@ const Watch = () => {
                     </button>
                 ))}
             </div>
-            <div>
-                <p>GENRE</p>
+            <p className={style.ps}>GENRE:</p>
+            <div className={style.episodeGenres}>
                 {info.genres.join(", ")}
             </div>
-            <p>otherName: {info.otherName}</p>
-            <p>releaseDate: {info.releaseDate}</p>
-            <p>status: {info.status}</p>
-            <p>subOrDub: {info.subOrDub}</p>
-            <p>totalEpisodes: {info.totalEpisodes}</p>
-            <p>description: {info.description}</p>
+            <p className={style.ps}>otherName: </p>
+            <div className={style.otherName}>
+                <span>{info.otherName}</span>
+            </div>
+            <p className={style.ps}>releaseDate: </p>
+            <div className={style.releaseDate}>
+                <span>{info.releaseDate}</span>
+            </div>
+            <p className={style.ps}>status: </p>
+            <div className={style.status}>
+                <span>{info.status}</span>
+            </div>
+            <p className={style.ps}>subOrDub: </p>
+            <div className={style.subOrDub}>
+                <span>{info.subOrDub}</span>
+            </div>
+            <p className={style.ps}>totalEpisodes: </p>
+            <div className={style.totalEpisodes}>
+                <span>{info.totalEpisodes}</span>
+            </div>
+            <p className={style.ps}>description: </p>
+            <div className={style.description}>
+                <span>{info.description}</span>
+            </div>
         </div>
     );
 };

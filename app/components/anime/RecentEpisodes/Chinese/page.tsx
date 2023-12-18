@@ -7,7 +7,7 @@ const Chinese: NextPage<any> = async () => {
 
     let data: any | null = null;
     try {
-        const response = await fetch("https://anivibha.vercel.app/api/anime/FetchRecentEpisodes", {
+        const response = await fetch(`${window.location.origin}/api/anime/FetchRecentEpisodes`, {
             method: "POST",
             body: JSON.stringify({
                 page: "1",
