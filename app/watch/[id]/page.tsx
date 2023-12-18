@@ -71,7 +71,7 @@ const Watch = () => {
                 src={selectedServer}
                 allowFullScreen
                 title="Watch now"
-                sandbox="allow-same-origin allow-scripts"
+                sandbox="allow-scripts"
                 allow="encrypted-media; gyroscope; picture-in-picture"
             >Sorry 😭 !</iframe>
 
