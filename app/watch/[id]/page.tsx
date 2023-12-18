@@ -25,7 +25,7 @@ const Watch = () => {
         const fetchData = async () => {
             try {
                 const Id = encodeURIComponent(params.id as string);
-                const response = await fetch(`../api/anime/FetchInfo?id=${Id}`);
+                const response = await fetch(`https://anivibha.vercel.app/api/anime/FetchInfo?id=${Id}`);
                 const data = await response.json();
                 setInfo(data);
                 // console.log("info", data);
@@ -41,7 +41,7 @@ const Watch = () => {
         try {
             const episodeId = id as string;
             const response = await fetch(
-                `../api/anime/FetchEpisodeServers?episodeId=${episodeId}`,
+                `https://anivibha.vercel.app/api/anime/FetchEpisodeServers?episodeId=${episodeId}`,
             );
             const data = await response.json();
             console.log(data)
