@@ -16,7 +16,7 @@ const TopAiringEpisodes: NextPage = async () => {
         data = await res.json()
         // console.log("data:::::::::::::", data)
       } catch (error) {
-        console.log("data:::::::::::::!!!!!found")
+        // console.log("data:::::::::::::!!!!!found")
       }
 
     return (

@@ -1,0 +1,66 @@
+.recentEpisodesContainer{
+    width: 100%;
+    /* height: auto; */
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-items: center;
+    /* background-color: transparent; */
+}
+.typeBtns{
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: space-evenly;
+    padding: 10px 0;
+}
+.typeBtns button{
+    padding: 2px;
+    font-size: large;
+    font-weight: 700;
+    border: transparent;
+    background-color: rgba(0, 255, 221, 0.2);
+    color: antiquewhite;
+}
+
+
+/* -------- */
+.episodesDiv{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    column-gap: 8%;
+    row-gap: 5px;
+    padding-top: 10px;
+}
+.episodes{
+    width: 40vw;
+    max-width: 200px;
+    min-width: 126px;
+    max-height: calc(40vw *(27/20) + 20%);
+    background-color: black;
+}
+.episodes div {
+    display: flex;
+    justify-content: center;
+}
+
+.episodes div img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.episodes p {
+    width: 100%;
+    height: auto;
+    padding: 10px 0;
+    text-align: center;
+    word-wrap: break-word;
+    background-color: black;
+}
+ 

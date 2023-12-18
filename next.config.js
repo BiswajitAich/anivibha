@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ['gogocdn.net'],
+  },
   // output: 'export',
   // exportPathMap: async function (defaultPathMap,
   //    { dev, dir, outDir, distDir, buildId }) {
