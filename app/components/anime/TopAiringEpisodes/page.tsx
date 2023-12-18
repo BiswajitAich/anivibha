@@ -5,8 +5,8 @@ const TopAiringEpisodes: NextPage = async () => {
     let data: any | null = null
 
     try {
-        const res = await fetch("https://github.com/BiswajitAich/anivibha/api/anime/FetchTopAiring", {
-        // const res = await fetch("/app/api/anime/fetchTopAiring",{
+        // const res = await fetch("http://localhost:3000/api/anime/FetchTopAiring", {
+        const res = await fetch("/api/anime/fetchTopAiring",{
           method: "POST",
           body: JSON.stringify({ page: "1" }),
           next:{
