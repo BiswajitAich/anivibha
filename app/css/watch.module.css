@@ -89,3 +89,12 @@
     padding: 10px 5%;
     background: linear-gradient(90deg, black, transparent, transparent, rgba(255, 0, 170, 0.5));
 }
+
+.header{
+    height: 60px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

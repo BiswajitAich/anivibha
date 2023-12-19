@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import style from "../../css/watch.module.css"
+import Image from "next/image";
+import Link from "next/link";
 
 interface episodeDataTypes {
     map: any
@@ -23,6 +25,9 @@ const Watch = () => {
     });
     const [servers, setServers] = useState<any>([]);
     const [selectedServer, setSelectedServer] = useState<any>();
+    const [selectedEpisode, setSelectedEpisode] = useState(null);
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,7 +36,9 @@ const Watch = () => {
                 const data = await response.json();
                 setInfo(data);
                 // console.log("info", data);
-                playEpisode(data.episodes[data.episodes.length - 1].id);
+                const selectedEpisode = data.episodes[data.episodes.length - 1].id;
+                playEpisode(selectedEpisode);
+                setSelectedEpisode(selectedEpisode);
             } catch (error) {
                 console.error(error);
             };
@@ -60,9 +67,24 @@ const Watch = () => {
         setSelectedServer(server);
         // console.log(selectedServer)
     };
+
+
+    const setSelectedEpisodeId = (episode:any) =>{
+        setSelectedEpisode(episode)
+        playEpisode(episode)
+    }
+
     return (
         <div>
-
+            <header className={style.header}>
+                <Link href="/components/home/Anime" className={style.logo}>
+                    <Image 
+                    src={require("../../../public/anivibha-logo.png")} 
+                    width={200}
+                    height={200}
+                    alt="logo" />
+                </Link>
+            </header>
             <iframe
                 referrerPolicy="no-referrer"
                 width="100%"
@@ -79,8 +101,14 @@ const Watch = () => {
             <p className={style.ps}>Episodes:</p>
             <div className={style.episodeBtnsDiv}>
                 {info.episodes.map((episode: episodeDataTypes) => (
-                    <button key={episode.id} onClick={() => playEpisode(episode.id)}>
-                        <div>{episode.number}</div>
+                    <button
+                        key={episode.id}
+                        onClick={() => setSelectedEpisodeId(episode.id)}
+                        style={{background: selectedEpisode === episode.id ?
+                             'linear-gradient(45deg, rgb(114 58 107), #ff00b1fc, rgb(114 58 107)' : 
+                             "black"}}
+                        >
+                        {episode.number}
                     </button>
                 ))}
             </div>
@@ -88,7 +116,9 @@ const Watch = () => {
             <div className={style.serverBtnsDiv}>
                 {servers.map((server: episodeDataTypes, idx: number) => (
                     <button key={idx}
-                        onClick={() => changeServer(server.url)}>
+                        onClick={() => changeServer(server.url)}
+                        style={{background: selectedServer===server.url ? 'rgba(255, 0, 170, 0.5)': ''}}
+                        >
                         {server.name}
                     </button>
                 ))}
