@@ -56,7 +56,8 @@ const TopAiring: NextPage<any> = ({data}) => {
 
   return (
     <div>
-      <h2>TopAiring</h2>
+      <div style={{minWidth: '100%', minHeight: '50px', background: 'transparent'}}/>
+      {/* <h2>TopAiring</h2> */}
       {airingData ? (
         <div className={style.carousel}
           onMouseEnter={() => setIsHovered(true)}
