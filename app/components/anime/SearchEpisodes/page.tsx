@@ -2,7 +2,7 @@
 import { NextPage } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import style from '../../../css/searchEpisodes.module.css'
 
 interface searchedDataTypes {
@@ -19,6 +19,26 @@ const SearchEpisodes: NextPage = () => {
     const [searchBtn, setSearchBtn] = useState([false, false]);
     const [searchedData, setSearchedData] = useState([]);
     const [showMessage, setShowMessage] = useState(false);
+    const foundAnimeDivRef = useRef<HTMLDivElement>(null);
+    const [displayGotoTopBtn, setDisplayGotoTopBtn] = useState(false)
+
+    useEffect(() => {
+        const handleScrollTop = () => {
+            if (foundAnimeDivRef.current) {
+                // console.log(foundAnimeDivRef.current.scrollTop);
+                setDisplayGotoTopBtn(foundAnimeDivRef.current.scrollTop > 100)
+            }
+        }
+
+        if (foundAnimeDivRef.current) {
+            foundAnimeDivRef.current.addEventListener('scroll', handleScrollTop);
+        }
+        return () => {
+            if (foundAnimeDivRef.current) {
+                foundAnimeDivRef.current.removeEventListener('scroll', handleScrollTop);
+            }
+        }
+    }, [foundAnimeDivRef.current])
 
     useEffect(() => {
 
@@ -77,6 +97,13 @@ const SearchEpisodes: NextPage = () => {
         setSearchedData([]);
     }
 
+
+    const handleAnimeClick = () => {
+        if (foundAnimeDivRef.current) {
+            foundAnimeDivRef.current.scrollTo({ behavior: 'smooth', top: 0 as number });
+        }
+    };
+
     return (
         <>
             <header className={style.header}>
@@ -94,11 +121,17 @@ const SearchEpisodes: NextPage = () => {
 
             <div className={style.inputDiv}>
                 {showMessage && searchBtn[1] === true ? (<span>Enter anime name to search !</span>) : null}
+                {searchedData.length===0 && searchBtn[1] === true && searchValue.trim() != ''? (<span>Nothing found related your search !</span>) : null}
                 {searchBtn[0] === true ? (
                     <div>
                         <input type="text"
                             placeholder="Search here"
                             onChange={(e) => setSearchValue(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSearchBtn();
+                                }
+                            }}
                         />
                     </div>
                 ) : null}
@@ -110,7 +143,7 @@ const SearchEpisodes: NextPage = () => {
 
             {searchedData.length >= 1 ? (
                 <div className={style.foundAnime}>
-                    <div className={style.foundAnimeDiv}>
+                    <div className={style.foundAnimeDiv} ref={foundAnimeDivRef}>
                         {searchedData?.map((anime: searchedDataTypes) => (
                             <div key={anime.id} className={style.foundAnimeEpisodes}>
                                 <Link href={`/watch/${anime.id}`} >
@@ -128,6 +161,11 @@ const SearchEpisodes: NextPage = () => {
                                 </Link>
                             </div>
                         ))}
+                        {displayGotoTopBtn ? (
+                            <button className={style.gotoTop} onClick={handleAnimeClick}>
+                                &uarr;
+                            </button>
+                        ) : null}
                     </div>
 
                 </div>
