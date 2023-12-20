@@ -2,9 +2,9 @@ import axios from "axios";
 import { load } from "cheerio";
 import { NextResponse } from "next/server";
 
-export const POST = async (response:Response) => {
+export const POST = async (request:Request) => {
 
-    const {page} = await response.json()
+    const {page} = await request.json()
     const baseUrl = 'https://gogoanime3.net'
     const fetchRecentMovies = async (page: number = 1): Promise<any> => {
     try {
