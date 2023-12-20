@@ -10,7 +10,7 @@ const TopAiringEpisodes: NextPage = async () => {
           method: "POST",
           body: JSON.stringify({ page: "1" }),
           next:{
-            revalidate: 3000,
+            revalidate: 30000,
           }
         });
         data = await res.json()

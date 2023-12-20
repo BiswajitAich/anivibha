@@ -1,0 +1,35 @@
+.movieContainer{
+    margin: 20px 0;
+    width: 100%;
+    height: auto;
+    min-height: 50vh;
+}
+
+.movieContainer h3{
+    padding: 10px;
+    background-color: #000000c9;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 1pc hotpink;
+}
+
+.movieDiv{
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 10px 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.movieCatd{
+    width: 200px;
+    height: auto;
+    max-width: 150px;
+    background-color: black;
+}
+
+.movieData{
+    padding: 5px;
+    font-size: 14px;
+}
+
