@@ -3,6 +3,7 @@ import Link from "next/link";
 import style from "@/app/css/topAiring.module.css"
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
+import Image from "next/image";
 
 interface dataType {
   id: string,
@@ -55,7 +56,7 @@ const TopAiring: NextPage<any> = ({data}) => {
   }
 
   return (
-    <div>
+    <div className={style.topAiringCarousel}>
       <div style={{minWidth: '100%', minHeight: '50px', background: 'transparent'}}/>
       {/* <h2>TopAiring</h2> */}
       {airingData ? (
@@ -69,7 +70,7 @@ const TopAiring: NextPage<any> = ({data}) => {
               <Link href={`/watch/${item.id}`}
                 key={idx}
                 className={idx === current ? `${style.carouselCard} ${style.carouselCardActive}` : `${style.carouselCard}`}>
-                <img src={item.image} alt={item.title} height={400} width={350} />
+                <Image src={item.image} alt={item.title} height={450} width={600} />
                 <div className={style.cardOverlay}>
                   <p style={{ color: "cyan" }}>Title:</p> {item.title}
                   <p style={{ color: "cyan" }}>Genres:</p> {item.genres.join(",")}

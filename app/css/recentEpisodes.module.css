@@ -33,10 +33,11 @@
     flex-wrap: wrap;
     justify-content: center;
     align-content: flex-start;
-    column-gap: 8%;
+    column-gap: 4%;
     row-gap: 5px;
     padding-top: 10px;
 }
+
 .episodes{
     width: 40vw;
     max-width: 200px;
@@ -64,3 +65,9 @@
     background-color: black;
 }
  
+
+@media screen and (min-width: 600px) {
+    .episodesDiv{
+        column-gap: 15px;
+    }
+}

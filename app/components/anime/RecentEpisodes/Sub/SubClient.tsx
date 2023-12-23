@@ -26,8 +26,8 @@ const DubClient: NextPage<any> = ({ data }) => {
                         <Image
                             src={episode.image}
                             alt={episode.title}
-                            width={200}
-                            height={250}
+                            width={150}
+                            height={200}
                         />
                     </div>
                     <p>{episode.title}</p>

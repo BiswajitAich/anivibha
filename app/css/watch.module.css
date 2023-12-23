@@ -1,3 +1,22 @@
+.watchContainer{
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.watchContainer iframe{
+    min-width: '100vw';
+}
+
+@media screen and (max-width: 1000px) {
+    .watchContainer iframe{
+        min-width: '100%';
+    }
+}
+
+
 .episodeBtnsDiv,
 .serverBtnsDiv,
 .episodeGenres,
