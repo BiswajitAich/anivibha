@@ -5,6 +5,7 @@ import style from "../../../css/recentEpisodes.module.css"
 import Chinese from "./Chinese/page";
 import Dub from "./Dub/page";
 import Sub from "./Sub/page";
+import LoadingComponent from "../../LoadingComponent/page";
 
 
 const Episodes: NextPage = () => {
@@ -54,7 +55,7 @@ const Episodes: NextPage = () => {
         </button>
 
       </div>
-      <Suspense fallback={<div style={{ color: "white" }}>loadings...</div>}>
+      <Suspense fallback={<LoadingComponent/>}>
         {show === "dub" ?
           <Dub /> : null}
         {show === "sub" ?
