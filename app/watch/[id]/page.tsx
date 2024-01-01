@@ -102,7 +102,7 @@ const Watch = () => {
                 src={selectedServer}
                 allowFullScreen
                 title="Watch now"
-                // sandbox="allow-popups allow-orientation-lock allow-modals allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
+                sandbox="allow-orientation-lock allow-modals allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
                 allow="encrypted-media; gyroscope; picture-in-picture; fullscreen"
             >Sorry 😭 !</iframe>
 
