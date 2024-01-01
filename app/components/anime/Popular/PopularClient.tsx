@@ -61,7 +61,7 @@ const PopularClient: NextPage<any> = ({ data }) => {
                             <div>
                                 <Image
                                     src={anime.image}
-                                    alt={anime?.id || idx}
+                                    alt={anime.title}
                                     width={120}
                                     height={160}
                                 />
