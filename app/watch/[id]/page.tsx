@@ -75,6 +75,10 @@ const Watch = () => {
 
 
     const setSelectedEpisodeId = (episode: any) => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
         setSelectedEpisode(episode)
         playEpisode(episode)
     }
@@ -98,8 +102,8 @@ const Watch = () => {
                 src={selectedServer}
                 allowFullScreen
                 title="Watch now"
-                // sandbox="allow-same-origin allow-scripts"
-                allow="encrypted-media; gyroscope; picture-in-picture"
+                // sandbox="allow-popups allow-orientation-lock allow-modals allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
+                allow="encrypted-media; gyroscope; picture-in-picture; fullscreen"
             >Sorry 😭 !</iframe>
 
 
@@ -132,40 +136,43 @@ const Watch = () => {
                         </button>
                     ))}
                 </div>
-                <p className={style.ps}>Servers:</p>
-                <div className={style.serverBtnsDiv}>
-                    {servers.map((server: episodeDataTypes, idx: number) => (
-                        <button key={idx}
-                            onClick={() => changeServer(server.url)}
-                            style={{ background: selectedServer === server.url ? 'rgba(255, 0, 170, 0.5)' : '' }}
-                        >
-                            {server.name}
-                        </button>
-                    ))}
-                </div>
-                <p className={style.ps}>GENRE:</p>
-                <div className={style.episodeGenres}>
-                    {info.genres.join(", ")}
-                </div>
-                <p className={style.ps}>otherName: </p>
-                <div className={style.otherName}>
-                    <span>{info.otherName}</span>
-                </div>
-                <p className={style.ps}>releaseDate: </p>
-                <div className={style.releaseDate}>
-                    <span>{info.releaseDate}</span>
-                </div>
-                <p className={style.ps}>status: </p>
-                <div className={style.status}>
-                    <span>{info.status}</span>
-                </div>
-                <p className={style.ps}>subOrDub: </p>
-                <div className={style.subOrDub}>
-                    <span>{info.subOrDub}</span>
-                </div>
-                <p className={style.ps}>totalEpisodes: </p>
-                <div className={style.totalEpisodes}>
-                    <span>{info.totalEpisodes}</span>
+                <div className={style.infos}
+                    style={{ backgroundImage: `url(${info.image})` }}>
+                    <p className={style.ps}>Servers:</p>
+                    <div className={style.serverBtnsDiv}>
+                        {servers.map((server: episodeDataTypes, idx: number) => (
+                            <button key={idx}
+                                onClick={() => changeServer(server.url)}
+                                style={{ background: selectedServer === server.url ? 'rgba(255, 0, 170, 0.5)' : '' }}
+                            >
+                                {server.name}
+                            </button>
+                        ))}
+                    </div>
+                    <p className={style.ps}>GENRE:</p>
+                    <div className={style.episodeGenres}>
+                        {info.genres.join(", ")}
+                    </div>
+                    <p className={style.ps}>otherName: </p>
+                    <div className={style.otherName}>
+                        <span>{info.otherName}</span>
+                    </div>
+                    <p className={style.ps}>releaseDate: </p>
+                    <div className={style.releaseDate}>
+                        <span>{info.releaseDate}</span>
+                    </div>
+                    <p className={style.ps}>status: </p>
+                    <div className={style.status}>
+                        <span>{info.status}</span>
+                    </div>
+                    <p className={style.ps}>subOrDub: </p>
+                    <div className={style.subOrDub}>
+                        <span>{info.subOrDub}</span>
+                    </div>
+                    <p className={style.ps}>totalEpisodes: </p>
+                    <div className={style.totalEpisodes}>
+                        <span>{info.totalEpisodes}</span>
+                    </div>
                 </div>
                 <p className={style.ps}>description: </p>
                 <div className={style.description}>

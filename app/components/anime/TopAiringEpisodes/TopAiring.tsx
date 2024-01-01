@@ -11,7 +11,7 @@ interface dataType {
   title: string,
   genres: string[],
 }
-const TopAiring: NextPage<any> = ({data}) => {
+const TopAiring: NextPage<any> = ({ data }) => {
 
   const airingData = data?.results
   const [isHovered, setIsHovered] = useState(false);
@@ -57,7 +57,7 @@ const TopAiring: NextPage<any> = ({data}) => {
 
   return (
     <div className={style.topAiringCarousel}>
-      <div style={{minWidth: '100%', minHeight: '50px', background: 'transparent'}}/>
+      <div style={{ minWidth: '100%', minHeight: '50px', background: 'transparent' }} />
       {/* <h2>TopAiring</h2> */}
       {airingData ? (
         <div className={style.carousel}
@@ -72,8 +72,8 @@ const TopAiring: NextPage<any> = ({data}) => {
                 className={idx === current ? `${style.carouselCard} ${style.carouselCardActive}` : `${style.carouselCard}`}>
                 <Image src={item.image} alt={item.title} height={450} width={600} />
                 <div className={style.cardOverlay}>
-                  <p style={{ color: "cyan" }}>Title:</p> {item.title}
-                  <p style={{ color: "cyan" }}>Genres:</p> {item.genres.join(",")}
+                  {item?.title ? (<><p style={{ color: "cyan" }}>Title:</p> {item.title} </>) : null}
+                  {item?.genres ? (<><p style={{ color: "cyan" }}>Genres:</p> {item?.genres?.join(",")} </>) : null}
                 </div>
               </Link>
             ))}

@@ -117,3 +117,13 @@
     align-items: center;
     justify-content: center;
 }
+
+.infos{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.infos div{
+    background: rgba(0, 0, 0, 0.7);
+}

@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 import SearchEpisodes from '../../anime/SearchEpisodes/page'
 import RecentMovies from '../../anime/RecentMovies/page'
 import style from '../../../css/home.module.css'
-
+import FetchPopular from '../../anime/Popular/page'
 
 const Anime: NextPage = () => {
   return (
@@ -13,6 +13,7 @@ const Anime: NextPage = () => {
       <Suspense fallback={<p>wait please ........</p>} >
         <SearchEpisodes />
         <TopAiring />
+        <FetchPopular />
         <RecentEpisodes />
         <RecentMovies />
       </Suspense>
