@@ -127,3 +127,18 @@
 .infos div{
     background: rgba(0, 0, 0, 0.7);
 }
+
+.typeBtn{
+    margin-left: 20px;
+    border: 0;
+    padding: 2px 10px;
+    background-color: transparent;
+    box-shadow: 0 0 10px #00ffd0, 0 0 10px inset #00ffdc;
+    color: chartreuse;
+    border-radius: 5px;
+}
+
+.typeBtn:hover {
+    color: black;
+    background: linear-gradient(45deg, #00ffbf, rgb(255, 255, 255) ,#00ffbf);
+}
