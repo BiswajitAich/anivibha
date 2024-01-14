@@ -4,8 +4,7 @@ import { useParams } from "next/navigation";
 import style from "../../css/watch.module.css"
 import Image from "next/image";
 import Link from "next/link";
-import LoadingComponent from "@/app/components/LoadingComponent/page";
-import { LoadingText } from "@/app/components/LoadingComponent/page"
+import LoadingComponent, { LoadingText } from "@/app/components/LoadingComponent/page";
 
 interface episodeDataTypes {
     map: any
