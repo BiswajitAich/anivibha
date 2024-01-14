@@ -5,6 +5,7 @@ import style from "../../css/watch.module.css"
 import Image from "next/image";
 import Link from "next/link";
 import LoadingComponent from "@/app/components/LoadingComponent/page";
+import { LoadingText } from "@/app/components/LoadingComponent/page"
 
 interface episodeDataTypes {
     map: any
@@ -38,15 +39,15 @@ const Watch = () => {
     const [selectedEpisodeDub, setSelectedEpisodeDub] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [subOrDub, setSubOrDub] = useState<string>('');
+    const [videoLoading, setVideoLoading] = useState(false);
 
     let controller: AbortController | null = null;
     const fetchData = async (Id: string) => {
         setLoading(true);
 
         try {
-            if (dubinfo.fetched && subinfo.fetched) {
-                return;
-            }
+            if (dubinfo.fetched && subinfo.fetched) return;
+
             controller = new AbortController();
             const signal = controller.signal;
             const response = await fetch(`${window.location.origin}/api/anime/FetchInfo?id=${Id}`,
@@ -54,12 +55,12 @@ const Watch = () => {
             );
             const data = await response.json();
 
-            if (data.id.endsWith('-dub')) {
+            if (/-dub$/.test(data.id)) {
                 setDubInfo({ ...data, fetched: true });
             } else {
                 setSubInfo({ ...data, fetched: true });
             }
-            console.log("info", data);
+            // console.log("info", data);
             // const selectedEpisode = data.episodes[data.episodes.length - 1].id;
             // playEpisode(selectedEpisode);
             // setSelectedEpisode(selectedEpisode);
@@ -75,14 +76,15 @@ const Watch = () => {
     }
     useEffect(() => {
         const Id = encodeURIComponent(params.id as string);
-        fetchData(Id);
-    }, [params.id]);
+        // fetchData(Id);
+        processId(Id);
 
-    useEffect(() => {
-        if (dubinfo.id) {
-            processId();
-        }
-    }, [dubinfo.id]);
+    }, []);
+
+    // useEffect(() => {
+    //     // if (!dubinfo.id || !subinfo.id) return;
+    //     processId();
+    // }, [dubinfo.id, subinfo.id]);
 
     const viewHistory = (episode?: string) => {
         if (params.id) {
@@ -92,7 +94,7 @@ const Watch = () => {
             const episodeId = encodeURIComponent(params.id as string);
             const Id = episodeId.split('-episode-')[0];
             const existingEntry = viewHistory[Id] || {};
-    
+
             if (episode) {
                 const { sub, dub } = existingEntry;
                 if (subOrDub === 'dub') {
@@ -106,7 +108,7 @@ const Watch = () => {
                         dub: dub || episode
                     };
                 }
-    
+
                 setSelectedEpisode(episode);
                 playEpisode(episode);
             } else {
@@ -114,12 +116,12 @@ const Watch = () => {
                 if (!sub || !dub) {
                     const latestDubEpisodeId = dubinfo?.episodes[dubinfo.episodes.length - 1]?.id;
                     const latestSubEpisodeId = subinfo?.episodes[subinfo.episodes.length - 1]?.id;
-    
+
                     viewHistory[Id] = {
                         sub: sub || latestSubEpisodeId,
                         dub: dub || latestDubEpisodeId
                     };
-    
+
                     setSelectedEpisode(subOrDub === 'dub' ? viewHistory[Id].dub : viewHistory[Id].sub);
                     playEpisode(subOrDub === 'dub' ? viewHistory[Id].dub : viewHistory[Id].sub);
                 } else {
@@ -127,11 +129,11 @@ const Watch = () => {
                     playEpisode(subOrDub === 'dub' ? dub : sub);
                 }
             }
-    
+
             localStorage.setItem('viewHistory', JSON.stringify(viewHistory));
         }
     };
-        
+
 
     useEffect(() => {
         viewHistory();
@@ -146,21 +148,47 @@ const Watch = () => {
         }
     }, [selectedEpisode]);
 
-    const processId = () => {
-        if (dubinfo.id.endsWith('-dub')) {
-            setSubOrDub('dub');
-            setSelectedEpisodeSub(dubinfo.id.replace('-dub', ''));
-            setSelectedEpisodeDub(dubinfo.id);
-        } else {
-            setSubOrDub('sub');
-            setSelectedEpisodeDub(dubinfo.id + '-dub');
-            setSelectedEpisodeSub(dubinfo.id);
-        }
+    const processId = (Id: string) => {
+        if (!Id) return;
+        // console.log(Id)
 
+        if (/-dub$/.test(Id)) {
+            setSubOrDub('dub');
+            setSelectedEpisodeDub(Id);
+            setSelectedEpisodeSub(Id.replace('-dub', ''));
+        } else if (!/-dub$/.test(Id)) {
+            setSubOrDub('sub');
+            setSelectedEpisodeDub(Id + '-dub');
+            setSelectedEpisodeSub(Id);
+        }
     }
+
+    const fetchselectedEpisode = async () => {
+        try {
+            if (selectedEpisodeSub) {
+                await fetchData(selectedEpisodeSub);
+            }
+
+            if (selectedEpisodeDub) {
+                await fetchData(selectedEpisodeDub);
+            }
+        } catch (error) {
+            console.log('Error fetching episodes:', error);
+        }
+        // console.log('selectedEpisodeSub', selectedEpisodeSub);
+        // console.log('selectedEpisodeDub', selectedEpisodeDub);
+    }
+    useEffect(() => {
+        fetchselectedEpisode();
+    }, [selectedEpisodeSub, selectedEpisodeDub]);
+
+
+
+
 
     const playEpisode = async (id: string) => {
         try {
+            setVideoLoading(true);
             const episodeId = id as string;
             // console.log('episodeId', episodeId)
             const response = await fetch(
@@ -172,6 +200,8 @@ const Watch = () => {
             setSelectedServer(data[0]?.url);
         } catch (error) {
             console.error('Failed to fetch episode servers:', error);
+        } finally {
+            setVideoLoading(false);
         }
     };
 
@@ -195,19 +225,24 @@ const Watch = () => {
     }
 
     const handleSubOrDub = (sORd: string) => {
+        if (sORd === 'sub') {
+            setSubOrDub('sub');
+            // console.log(subinfo)
+            // if (!selectedEpisodeSub) return;
+            // fetchData(selectedEpisodeSub);
+        } else if (sORd === 'dub') {
+            setSubOrDub('dub');
+            // console.log(dubinfo)
 
-        if (selectedEpisodeSub && selectedEpisodeDub) {
-
-            if (sORd === 'sub') {
-                fetchData(selectedEpisodeSub);
-                setSubOrDub('sub');
-            } else if (sORd === 'dub') {
-                fetchData(selectedEpisodeDub);
-                setSubOrDub('dub');
-            }
+            // if (!selectedEpisodeDub) return;
+            // fetchData(selectedEpisodeDub);
         }
         viewHistory();
     }
+
+    const handleVideoLoaded = () => {
+        setVideoLoading(false);
+    };
 
     return (
         <div className={style.watchContainer}>
@@ -220,17 +255,32 @@ const Watch = () => {
                         alt="logo" />
                 </Link>
             </header>
-            <iframe
-                referrerPolicy="no-referrer"
-                width="100%"
-                height="100%"
-                style={{ aspectRatio: '7/5', backgroundColor: 'black', border: "0" }}
-                src={selectedServer}
-                allowFullScreen
-                title="Watch now"
-                // sandbox="allow-orientation-lock allow-modals allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
-                allow="encrypted-media; gyroscope; picture-in-picture; fullscreen"
-            >Sorry 😭 !</iframe>
+
+
+            {videoLoading ? (
+                <div style={{
+                    aspectRatio: '7/5',
+                    backgroundColor: 'black',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <LoadingText />
+                </div>
+            ) : (
+                <iframe
+                    referrerPolicy="no-referrer"
+                    width="100%"
+                    height="100%"
+                    style={{ aspectRatio: '7/5', backgroundColor: 'black', border: "0" }}
+                    src={selectedServer}
+                    allowFullScreen
+                    title="Watch now"
+                    onLoad={handleVideoLoaded}
+                    // sandbox="allow-orientation-lock allow-modals allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
+                    allow="encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                >Sorry 😭 !</iframe>
+            )}
 
 
             {loading ? (
@@ -250,7 +300,7 @@ const Watch = () => {
                     <span style={{ color: 'chartreuse' }}> {selectedEpisodeNumber}</span>
                 </p>
                 <p className={style.ps}>Episodes:
-                    {selectedEpisodeSub ? (<button
+                    {subinfo.fetched && subinfo.title != "" ? (<button
                         className={style.typeBtn}
                         style={{
                             backgroundColor: subOrDub === 'sub' ? 'cyan' : '',
@@ -261,7 +311,7 @@ const Watch = () => {
                         SUB
                     </button>
                     ) : null}
-                    {selectedEpisodeDub ? (<button
+                    {dubinfo.fetched && dubinfo.title != "" ? (<button
                         className={style.typeBtn}
                         style={{
                             backgroundColor: subOrDub === 'dub' ? 'cyan' : '',
@@ -288,7 +338,7 @@ const Watch = () => {
                                 {episode.number}
                             </button>
                         )) :
-                        subinfo.episodes.map((episode: episodeDataTypes) => (
+                        subinfo.episodes?.map((episode: episodeDataTypes) => (
                             <button
                                 key={episode.id}
                                 onClick={() => setSelectedEpisodeId(episode.id)}
@@ -308,7 +358,7 @@ const Watch = () => {
                     style={{ backgroundImage: `url(${subOrDub === 'dub' ? dubinfo.image : subinfo.image})` }}>
                     <p className={style.ps}>Servers:</p>
                     <div className={style.serverBtnsDiv}>
-                        {servers.map((server: episodeDataTypes, idx: number) => (
+                        {servers?.map((server: episodeDataTypes, idx: number) => (
                             <button key={idx}
                                 onClick={() => changeServer(server.url)}
                                 style={{ background: selectedServer === server.url ? 'rgba(255, 0, 170, 0.5)' : '' }}
@@ -317,31 +367,47 @@ const Watch = () => {
                             </button>
                         ))}
                     </div>
+
+
                     <p className={style.ps}>GENRE:</p>
                     <div className={style.episodeGenres}>
-                        {subOrDub === 'dub' ? dubinfo.genres : subinfo.genres.join(", ")}
+                        {subOrDub === 'dub' ? dubinfo?.genres?.join(", ") : subinfo?.genres?.join(", ")}
                     </div>
+
+
                     <p className={style.ps}>otherName: </p>
                     <div className={style.otherName}>
                         <span>{subOrDub === 'dub' ? dubinfo.otherName : subinfo.otherName}</span>
                     </div>
+
+
                     <p className={style.ps}>releaseDate: </p>
                     <div className={style.releaseDate}>
                         <span>{subOrDub === 'dub' ? dubinfo.releaseDate : subinfo.releaseDate}</span>
                     </div>
+
+
                     <p className={style.ps}>status: </p>
                     <div className={style.status}>
                         <span>{subOrDub === 'dub' ? dubinfo.status : subinfo.status}</span>
                     </div>
+
+
                     <p className={style.ps}>subOrDub: </p>
                     <div className={style.subOrDub}>
                         <span>{subOrDub === 'dub' ? dubinfo.subOrDub : subinfo.subOrDub}</span>
                     </div>
+
+
                     <p className={style.ps}>totalEpisodes: </p>
                     <div className={style.totalEpisodes}>
                         <span>{subOrDub === 'dub' ? dubinfo.totalEpisodes : subinfo.totalEpisodes}</span>
                     </div>
+
+
                 </div>
+
+
                 <p className={style.ps}>description: </p>
                 <div className={style.description}>
                     <span>{subOrDub === 'dub' ? dubinfo.description : subinfo.description}</span>

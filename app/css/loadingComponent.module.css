@@ -52,7 +52,7 @@
     }
   }
 
-.loadingText span {
+.text {
     display: inline-block;
     opacity: 0;
     animation: fadeInOut 1s infinite;
