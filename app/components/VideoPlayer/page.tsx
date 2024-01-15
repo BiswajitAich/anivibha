@@ -24,4 +24,4 @@ const VideoPlayer: NextPage<VideoPlayerProps> = ({selectedServer, handleVideoLoa
     )
 }
 
-export default VideoPlayer
+export { VideoPlayer as default };
