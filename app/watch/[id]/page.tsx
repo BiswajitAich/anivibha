@@ -244,6 +244,17 @@ const Watch = () => {
         setVideoLoading(false);
     };
 
+    useEffect(() => {
+    const iframe = document.getElementById('iframe'); 
+
+    if (iframe) {
+      iframe.contentWindow.window.open = function () {
+        console.log("Pop-ups blocked within the iframe.");
+        return null; 
+      };
+    }
+  }, [selectedServer]);
+    
     return (
         <div className={style.watchContainer}>
             <header className={style.header}>
@@ -277,6 +288,7 @@ const Watch = () => {
                     allowFullScreen
                     title="Watch now"
                     onLoad={handleVideoLoaded}
+                    id="iframe"
                     // sandbox="allow-orientation-lock allow-modals allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
                     allow="encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 >Sorry 😭 !</iframe>
