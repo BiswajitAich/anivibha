@@ -248,7 +248,7 @@ const Watch = () => {
     const iframe = document.getElementById('iframe'); 
 
     if (iframe) {
-      iframe.contentWindow.window.open = function () {
+      iframe.contentWindow?.open = function () {
         console.log("Pop-ups blocked within the iframe.");
         return null; 
       };
