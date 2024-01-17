@@ -41,15 +41,16 @@ const Watch = () => {
     const [subOrDub, setSubOrDub] = useState<string>('');
     const [videoLoading, setVideoLoading] = useState(false);
 
-    let controller: AbortController | null = null;
+    let controllerInfo: AbortController | null = null;
+    let controllerServers: AbortController | null = null;
     const fetchData = async (Id: string) => {
         setLoading(true);
 
         try {
             if (dubinfo.fetched && subinfo.fetched) return;
 
-            controller = new AbortController();
-            const signal = controller.signal;
+            controllerInfo = new AbortController();
+            const signal = controllerInfo.signal;
             const response = await fetch(`${window.location.origin}/api/anime/FetchInfo?id=${Id}`,
                 { signal }
             );
@@ -68,9 +69,9 @@ const Watch = () => {
             console.error(error);
         } finally {
             setLoading(false);
-            if (controller) {
-                controller.abort();
-                controller = null;
+            if (controllerInfo) {
+                controllerInfo.abort();
+                controllerInfo = null;
             }
         }
     }
@@ -191,17 +192,25 @@ const Watch = () => {
             setVideoLoading(true);
             const episodeId = id as string;
             // console.log('episodeId', episodeId)
+            controllerServers = new AbortController();
+            const signal = controllerServers.signal;
             const response = await fetch(
                 `${window.location.origin}/api/anime/FetchEpisodeServers?episodeId=${episodeId}`,
+                {signal}
             );
             const data = await response.json();
             // console.log(data)
             setServers(data);
             setSelectedServer(data[0]?.url);
+            console.log(data[0]?.url);
         } catch (error) {
             console.error('Failed to fetch episode servers:', error);
         } finally {
             setVideoLoading(false);
+            if (controllerServers) {
+                controllerServers.abort();
+                controllerServers = null;
+            }
         }
     };
 
@@ -244,16 +253,7 @@ const Watch = () => {
         setVideoLoading(false);
     };
 
-    useEffect(() => {
-    const iframe = document.getElementById('iframe'); 
-
-    if (iframe) {
-      iframe.contentWindow?.open = function () {
-        console.log("Pop-ups blocked within the iframe.");
-        return null; 
-      };
-    }
-  }, [selectedServer]);
+ 
     
     return (
         <div className={style.watchContainer}>
@@ -288,8 +288,6 @@ const Watch = () => {
                     allowFullScreen
                     title="Watch now"
                     onLoad={handleVideoLoaded}
-                    id="iframe"
-                    // sandbox="allow-orientation-lock allow-modals allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
                     allow="encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 >Sorry 😭 !</iframe>
             )}
