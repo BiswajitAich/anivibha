@@ -10,8 +10,8 @@ export const POST = async (request: Request) => {
     const pageParam = page;
 
 
-    const ajaxUrl = 'https://ajax.gogo-load.com/ajax';
-    const baseUrl = 'https://gogoanime3.net';
+    const ajaxUrl = `${process.env.Next_AJAXURL}`;
+    const baseUrl = `${process.env.NEXT_BASEURL}`;
 
     const fetchTopAiring = async (page: number = 1): Promise<any> => {
         try {

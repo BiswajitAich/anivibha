@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 export const GET = async (request: Request) => {
     const url = new URL(request.url || '')
     const episodeId = url.searchParams.get("episodeId");
-    const baseUrl = 'https://gogoanime3.net';
+    const baseUrl = `${process.env.NEXT_BASEURL}`;
 
     const fetchEpisodeServers = async (episodeId: string): Promise<any[]> => {
         // console.log(episodeId)

@@ -1,11 +1,11 @@
 import axios from "axios";
 import { load } from "cheerio";
 
-export const POST = async (req:Request) => {
-    const {page} = await req.json();
+export const POST = async (req: Request) => {
+  const { page } = await req.json();
 
-    const baseUrl = 'https://gogoanime3.net'
-const fetchPopular = async (page: number = 1): Promise<any> => {
+  const baseUrl = `${process.env.NEXT_BASEURL}`;
+  const fetchPopular = async (page: number = 1): Promise<any> => {
     try {
       const res = await axios.get(`${baseUrl}/popular.html?page=${page}`);
 
@@ -43,9 +43,9 @@ const fetchPopular = async (page: number = 1): Promise<any> => {
   try {
     const res = await fetchPopular(Number(page));
     // console.log(res);
-    return new Response(JSON.stringify(res),{ status: 201 });
+    return new Response(JSON.stringify(res), { status: 201 });
   } catch (error) {
-    console.log(JSON.stringify({ error: 'Internal Server Error' }) );
+    console.log(JSON.stringify({ error: 'Internal Server Error' }));
   }
 
 

@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export const POST = async (request: Request) =>{
     const {query, page} = await request.json();
 
-    const baseUrl = 'https://gogoanime3.net';
+    const baseUrl = `${process.env.NEXT_BASEURL}`;
 
 
 

@@ -5,10 +5,9 @@ import { NextResponse } from "next/server";
 export const POST = async (request:Request) => {
 
     const {page} = await request.json()
-    const baseUrl = 'https://gogoanime3.net'
     const fetchRecentMovies = async (page: number = 1): Promise<any> => {
     try {
-      const res = await axios.get(`${baseUrl}/anime-movies.html?aph&page=${page}`);
+      const res = await axios.get(`${process.env.NEXT_BASEURL}/anime-movies.html?aph&page=${page}`);
 
       const $ = load(res.data);
 
@@ -24,7 +23,7 @@ export const POST = async (request:Request) => {
           title: pName.attr('title')!,
           releaseDate: pRelease.text().replace('Released: ', '').trim(),
           image: $(el).find('div > a > img').attr('src'),
-          url: `${baseUrl}${a.attr('href')}`,
+          url: `${process.env.NEXT_BASEURL}${a.attr('href')}`,
         });
       });
 

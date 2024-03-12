@@ -1,16 +1,17 @@
 import { load } from 'cheerio';
-const ajaxUrl = 'https://ajax.gogo-load.com/ajax';
-const baseUrl = 'https://gogoanime3.net';
+const ajaxUrl = `${process.env.Next_AJAXURL}`;
+const baseUrl = `${process.env.NEXT_BASEURL}`;
 
 export const GET = async (request: Request) => {
-    const url = new URL(request.url || '');
-    const id = url.searchParams.get("id");
-    // console.log("id::",id)
-  
+  const url = new URL(request.url || '');
+  const id = url.searchParams.get("id");
+  // console.log("id::",id)
+
   const gogoanime = new Gogoanime(baseUrl, ajaxUrl);
 
   try {
     const info = await gogoanime.fetchAnimeInfo(String(id));
+    // console.log(info)
     return new Response(JSON.stringify(info))
   } catch (error) {
     return new Response(JSON.stringify({ error: error }))
@@ -19,7 +20,7 @@ export const GET = async (request: Request) => {
 
 
 class Gogoanime {
-  constructor(private baseUrl: string, private ajaxUrl: string) {}
+  constructor(private baseUrl: string, private ajaxUrl: string) { }
 
   public async fetchAnimeInfo(id: string): Promise<any> {
     if (!id.includes('gogoanime')) id = `${this.baseUrl}/category/${id}`;
@@ -43,16 +44,16 @@ class Gogoanime {
         .trim();
       animeInfo.url = id;
       animeInfo.image = $('div.anime_info_body_bg > img').attr('src');
-      animeInfo.releaseDate = $('div.anime_info_body_bg > p:nth-child(7)')
+      animeInfo.releaseDate = $('div.anime_info_body_bg > p:nth-child(8)')
         .text()
         .trim()
         .split('Released: ')[1];
-      animeInfo.description = $('div.anime_info_body_bg > p:nth-child(5)')
+      animeInfo.description = $('div.anime_info_body_bg > div.description ')
         .text()
         .trim()
         .replace('Plot Summary: ', '');
 
-      animeInfo.subOrDub = animeInfo.title.toLowerCase().includes('dub') ? "DUB": "SUB";
+      animeInfo.subOrDub = animeInfo.title.toLowerCase().includes('dub') ? "DUB" : "SUB";
 
       animeInfo.type = $('div.anime_info_body_bg > p:nth-child(4) > a')
         .text()
@@ -80,8 +81,9 @@ class Gogoanime {
         .replace('Other name: ', '')
         .replace(/;/g, ',');
 
-      $('div.anime_info_body_bg > p:nth-child(6) > a').each((i, el) => {
-        animeInfo.genres?.push($(el).attr('title')!.toString());
+      animeInfo.genres = [];
+      $('p.type > span:contains(Genre)').nextAll('a').each((i, el) => {
+        animeInfo.genres.push($(el).text());
       });
 
       const ep_start = $('#episode_page > li').first().find('a').attr('ep_start');
@@ -90,8 +92,7 @@ class Gogoanime {
       const alias = $('#alias_anime').attr('value');
 
       const html = await this.client.get(
-        `${
-          this.ajaxUrl
+        `${this.ajaxUrl
         }/load-list-episode?ep_start=${ep_start}&ep_end=${ep_end}&id=${movie_id}&default_ep=${0}&alias=${alias}`
       );
       const $$ = load(html.data);
@@ -108,17 +109,17 @@ class Gogoanime {
 
       animeInfo.totalEpisodes = parseInt(ep_end ?? '0');
       return animeInfo;
-        } catch (err) {
-          throw new Error(`failed to fetch anime info: ${err}`);
-        }
-      }
+    } catch (err) {
+      throw new Error(`failed to fetch anime info: ${err}`);
+    }
+  }
 
-      private client = {
-        get: async (url: string) => {
+  private client = {
+    get: async (url: string) => {
 
-           const response = await fetch(url);
-                const data = await response.text();
-                return { data };
-              },
-            };
-          }
+      const response = await fetch(url);
+      const data = await response.text();
+      return { data };
+    },
+  };
+}
