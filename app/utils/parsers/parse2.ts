@@ -25,11 +25,11 @@ export function parseAnimeList2($: CheerioAPI, len: number = Infinity): AnimePos
         const dub = ele.find('.tick.ltr .tick-item.tick-dub').text().trim() || '';
         const eps = ele.find('.tick.ltr .tick-item.tick-eps').text().trim() || '';
         const name = ele.find('.film-detail .film-name .dynamic-name').attr('title') ||
-            ele.find('.film-detail .film-name .dynamic-name').text().trim() || "";
-        const JapaneseName = ele.find('.film-detail .film-name .dynamic-name').attr('data-jname') || "";
-        const url = ele.find('.film-poster-img ').attr('data-src') || "";
+            ele.find('.film-detail .film-name .dynamic-name').text().trim() || '';
+        const JapaneseName = ele.find('.film-detail .film-name .dynamic-name').attr('data-jname') || '';
+        const url = ele.find('.film-poster-img ').attr('data-src') || '';
         const id = ele.find('.film-poster-ahref.item-qtip').attr('data-id');
-        const animeId = ele.find('.film-poster-ahref.item-qtip').attr('href')?.replace('/', '');
+        const animeId = ele.find('.film-poster-ahref.item-qtip').attr('href')?.replace('/', '') || '';
         const rate = ele.find('.film-poster .tick.tick-rate').text().trim() || '';
         const itemType = ele.find('.fd-infor .fdi-item:not(.fdi-duration)').first().text().trim() || '';
         const duration = ele.find('.fd-infor .fdi-item.fdi-duration').text().trim() || '';

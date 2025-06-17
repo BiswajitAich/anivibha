@@ -10,7 +10,7 @@ const CompletedComponent = ({ info }: { info: AnimePoster[] }) => {
         <div className={styles.container}>
             {/* Header with title + tabs */}
             <div className={styles.header}>
-                <div className={styles.headerTitle}>Most Viewed</div>
+                <div className={styles.headerTitle}>RECENTLY COMPLETE</div>
             </div>
 
             {/* List */}
