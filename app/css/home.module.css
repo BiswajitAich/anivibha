@@ -62,8 +62,19 @@
 /* ------------------------------------------------------ */
 .animeHome{
     width: 100%;
-    max-width: 1000px;
+    /* max-width: 1000px; */
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.homeContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 700px) {
+    .homeContainer{
+        flex-direction: column;
+    }
 }

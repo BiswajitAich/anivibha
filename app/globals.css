@@ -1,3 +1,18 @@
+:root {
+  --primary-cyan: #00ffff;
+  --primary-purple: #8b00ff;
+  --primary-pink: #ff00aa;
+  --accent-green: #00ff88;
+  --accent-orange: #ff8800;
+  --bg-dark: #0a0a0f;
+  --bg-darker: #050508;
+  --glass-bg: rgba(15, 15, 25, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0ff;
+  --glow-intensity: 0 0 20px;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -6,6 +21,34 @@
   user-select: none;
   -webkit-user-drag: none;
 }
+
+/* Custom Scrollbar */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--primary-cyan);
+  border-radius: 4px;
+  box-shadow: 0 0 10px var(--primary-cyan);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-purple);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 
 html,
 body {
@@ -16,13 +59,8 @@ body {
 
 body {
   color: rgb(255, 255, 255);
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgba(230, 128, 255, 0.5)
-    )
-    rgba(0, 0, 0);
-    
+  background: rgba(0, 0, 0);
+
 }
 
 a {
@@ -30,6 +68,7 @@ a {
   text-decoration: none;
 }
 
-a,button{
+a,
+button {
   cursor: pointer;
 }

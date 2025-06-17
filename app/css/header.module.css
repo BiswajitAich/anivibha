@@ -1,0 +1,49 @@
+.header {
+    width: 100%;
+    max-width: 100dvw;
+    position: absolute;
+    top: 0;
+    z-index: 4;
+}
+
+.container {
+    background: var(--bg-dark);
+    max-width: 100%;
+    height: auto;
+    padding: 1rem;
+    border-radius: 2rem;
+    margin: 0.5rem 2rem 0.5rem 2rem;
+    max-height: 80px;
+    border: 4px solid var(--glass-border);
+}
+
+.logo {
+    width: 140px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.headerLine {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--primary-cyan) 50%, transparent 100%);
+  animation: lineGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes lineGlow {
+  0% {
+    box-shadow: 0 0 5px var(--primary-cyan);
+  }
+
+  100% {
+    box-shadow: 0 0 20px var(--primary-cyan);
+  }
+}

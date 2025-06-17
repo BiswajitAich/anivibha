@@ -1,0 +1,1034 @@
+/* Enhanced Futuristic Banner Container Styles */
+.bannerContainer {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 75px;
+    background: radial-gradient(ellipse at center, var(--bg-dark) 0%, var(--bg-darker) 100%);
+}
+
+/* Animated Particle Field */
+.particleField {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    animation: float 6s infinite ease-in-out;
+}
+
+.particle0 {
+    background: var(--primary-cyan);
+    box-shadow: 0 0 6px var(--primary-cyan);
+}
+
+.particle1 {
+    background: var(--primary-purple);
+    box-shadow: 0 0 6px var(--primary-purple);
+}
+
+.particle2 {
+    background: var(--primary-pink);
+    box-shadow: 0 0 6px var(--primary-pink);
+}
+
+.particle3 {
+    background: var(--accent-green);
+    box-shadow: 0 0 6px var(--accent-green);
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+/* Background Images with Enhanced Effects */
+.bannerBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.bgImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.1);
+    filter: brightness(0.7) saturate(1.2);
+}
+
+.bgImage.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.bgImage.transitioning {
+    opacity: 0.5;
+    transform: scale(1.05);
+}
+
+.bgOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+            rgba(0, 255, 255, 0.1) 0%,
+            rgba(139, 0, 255, 0.15) 25%,
+            rgba(255, 0, 170, 0.1) 50%,
+            rgba(0, 0, 0, 0.8) 100%);
+    backdrop-filter: blur(1px);
+}
+
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 255, 0.03) 2px,
+            rgba(0, 255, 255, 0.03) 4px);
+    pointer-events: none;
+    animation: scanline-move 2s linear infinite;
+}
+
+@keyframes scanline-move {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(4px);
+    }
+}
+
+/* Main Content */
+.bannerContent {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.contentWrapper {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 3rem;
+    align-items: center;
+    flex: 1;
+    padding: 2rem 0;
+}
+
+/* Anime Info Section */
+.animeInfo {
+    animation: slideInLeft 1s ease-out;
+}
+
+.fadeIn {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.fadeOut {
+    animation: fadeOut 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+}
+
+.infoPanel {
+    background: linear-gradient(135deg,
+            rgba(15, 15, 25, 0.95) 0%,
+            rgba(10, 10, 20, 0.8) 100%);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 0 40px rgba(0, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.infoPanel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(0, 255, 255, 0.1),
+            transparent);
+    animation: scan 3s infinite;
+}
+
+@keyframes scan {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.panelHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.statusIndicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    box-shadow: 0 0 10px var(--accent-green);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.panelTitle {
+    font-size: 0.8rem;
+    color: var(--accent-green);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Anime Title */
+.animeTitle {
+    margin: 1.5rem 0;
+}
+
+.titleMain {
+    display: block;
+    font-size: clamp(1rem, 5vw, 2.5rem);
+    font-weight: 900;
+    background: linear-gradient(45deg,
+            var(--primary-cyan),
+            var(--primary-purple),
+            var(--primary-pink));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        filter: brightness(1);
+    }
+
+    to {
+        filter: brightness(1.2) drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+    }
+}
+
+.titleJapanese {
+    display: block;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: var(--text-secondary);
+    font-weight: 400;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* Meta Information */
+.animeMeta {
+    display: flex;
+    gap: 2rem;
+    margin: 1.5rem 0;
+}
+
+.metaItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.metaLabel {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.metaValue {
+    font-size: 0.9rem;
+    color: var(--primary-cyan);
+    font-weight: 500;
+}
+
+/* Action Buttons */
+.animeActions {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.btnPrimary,
+.btnSecondary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    overflow: hidden;
+}
+
+.btnPrimary {
+    background: linear-gradient(45deg, var(--primary-cyan), var(--primary-purple));
+    color: white;
+    border: 1px solid var(--primary-cyan);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.btnSecondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.btnGlow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent);
+    transition: left 0.5s ease;
+}
+
+.btnPrimary:hover .btnGlow {
+    left: 100%;
+}
+
+.btnPrimary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+.btnSecondary:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-cyan);
+    background: rgba(0, 255, 255, 0.1);
+}
+
+.btnIcon {
+    font-size: 1rem;
+}
+
+.btnText {
+    font-size: 0.8rem;
+}
+
+/* Anime Badges */
+.animeBadges {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    background: rgba(0, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.badgeIcon {
+    filter: brightness(0) invert(1);
+}
+
+.badgeText {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary-cyan);
+}
+
+/* Anime Poster */
+.animePoster {
+    animation: slideInRight 1s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.posterContainer {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+}
+
+.posterFrame {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    box-shadow:
+        0 0 40px rgba(0, 255, 255, 0.2),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s ease;
+}
+
+.posterFrame:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--primary-cyan);
+    box-shadow:
+        0 20px 60px rgba(0, 255, 255, 0.4),
+        inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.posterImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.posterFrame:hover .posterImage {
+    transform: scale(1.05);
+}
+
+
+.posterFrame:hover  {
+    opacity: 1;
+}
+
+
+
+.hologramEffect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 255, 0.1) 2px,
+            rgba(0, 255, 255, 0.1) 4px);
+    pointer-events: none;
+    animation: hologram 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes hologram {
+    0% {
+        opacity: 0.1;
+    }
+
+    100% {
+        opacity: 0.3;
+    }
+}
+
+/* Navigation Controls */
+.bannerControls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.2));
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    bottom: 1rem;
+}
+
+.controlsWrapper {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navBtn {
+    width: 50px;
+    height: 50px;
+    border: 2px solid var(--primary-cyan);
+    border-radius: 50%;
+    background: rgba(0, 255, 255, 0.1);
+    color: var(--primary-cyan);
+    font-size: 1.5rem;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.navBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, var(--primary-cyan) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.navBtn:hover::before {
+    opacity: 0.2;
+}
+
+.navBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--primary-cyan);
+    background: rgba(0, 255, 255, 0.2);
+}
+
+.navIcon {
+    position: relative;
+    z-index: 1;
+}
+
+.dotsContainer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dotCore {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: var(--primary-cyan);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+}
+
+.dot.active .dotCore {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.dot.active {
+    border-color: var(--primary-cyan);
+    box-shadow: 0 0 10px var(--primary-cyan);
+    background: rgba(0, 255, 255, 0.2);
+}
+
+.dot:hover {
+    border-color: var(--primary-purple);
+    transform: scale(1.2);
+}
+
+/* Progress Container */
+.progressContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+.progressBar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg,
+            var(--primary-cyan),
+            var(--primary-purple),
+            var(--primary-pink));
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.progressFill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent);
+    animation: progressGlow 2s infinite;
+}
+
+@keyframes progressGlow {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.progressText {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+/* HUD Overlay */
+.hudOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 15;
+}
+
+.hudCorner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--primary-cyan);
+    opacity: 0.6;
+}
+
+.hudCorner[data-position="top-left"] {
+    top: 20px;
+    left: 20px;
+    border-right: none;
+    border-bottom: none;
+    border-top-left-radius: 10px;
+}
+
+.hudCorner[data-position="top-right"] {
+    top: 20px;
+    right: 20px;
+    border-left: none;
+    border-bottom: none;
+    border-top-right-radius: 10px;
+}
+
+.hudCorner[data-position="bottom-left"] {
+    bottom: 20px;
+    left: 20px;
+    border-right: none;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+}
+
+.hudCorner[data-position="bottom-right"] {
+    bottom: 20px;
+    right: 20px;
+    border-left: none;
+    border-top: none;
+    border-bottom-right-radius: 10px;
+}
+
+/* Loading State */
+.loadingSkeleton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 2rem;
+    background: radial-gradient(circle, var(--bg-dark) 0%, var(--bg-darker) 100%);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    .contentWrapper {
+        grid-template-columns: 1fr 300px;
+        gap: 2rem;
+    }
+
+    .bannerContent {
+        padding: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .contentWrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .animePoster {
+        order: -1;
+    }
+
+    .posterContainer {
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .infoPanel {
+        padding: 1.5rem;
+    }
+
+    .animeActions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .animeMeta {
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .bannerContainer {
+        height: 100vh;
+        min-height: 100vh;
+    }
+
+    .bannerContent {
+        padding: 1rem;
+    }
+
+    .contentWrapper {
+        gap: 1.5rem;
+        padding: 1rem 0;
+    }
+
+    .infoPanel {
+        padding: 1.5rem 1rem;
+    }
+
+    .titleMain {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+    }
+
+    .titleJapanese {
+        font-size: clamp(0.8rem, 3vw, 1rem);
+    }
+
+    .animeActions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .btnPrimary,
+    .btnSecondary {
+        justify-content: center;
+        padding: 1rem;
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .animeBadges {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .controlsWrapper {
+        gap: 1rem;
+    }
+
+    .navBtn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .dotsContainer {
+        gap: 0.6rem;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .dotCore {
+        width: 4px;
+        height: 4px;
+    }
+
+    .hudCorner {
+        width: 25px;
+        height: 25px;
+    }
+
+    .hudCorner[data-position="top-left"],
+    .hudCorner[data-position="top-right"] {
+        top: 10px;
+    }
+
+    .hudCorner[data-position="bottom-left"],
+    .hudCorner[data-position="bottom-right"] {
+        bottom: 10px;
+    }
+
+    .hudCorner[data-position="top-left"],
+    .hudCorner[data-position="bottom-left"] {
+        left: 10px;
+    }
+
+    .hudCorner[data-position="top-right"],
+    .hudCorner[data-position="bottom-right"] {
+        right: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .bannerContent {
+        padding: 0.5rem;
+    }
+
+    .infoPanel {
+        margin: 0 0.5rem;
+        padding: 1rem;
+    }
+
+    .posterContainer {
+        max-width: 200px;
+    }
+
+    .animeMeta {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .progressContainer {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .progressBar {
+        width: 200px;
+    }
+
+    .controlsWrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dotsContainer {
+        /* order: -1;
+        margin-bottom: 1rem; */
+        display: none;
+    }
+}
+
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+    .posterImage {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+    .bannerContainer {
+        background: radial-gradient(ellipse at center, #0a0a0f 0%, #050508 100%);
+    }
+
+    .bgOverlay {
+        background: linear-gradient(135deg,
+                rgba(0, 255, 255, 0.15) 0%,
+                rgba(139, 0, 255, 0.2) 25%,
+                rgba(255, 0, 170, 0.15) 50%,
+                rgba(0, 0, 0, 0.9) 100%);
+    }
+}
+
+/* Accessibility Improvements */
+@media (prefers-contrast: high) {
+    .infoPanel {
+        border-width: 2px;
+        border-color: var(--primary-cyan);
+    }
+
+    .btnPrimary,
+    .btnSecondary {
+        border-width: 2px;
+    }
+
+    .hudCorner {
+        border-width: 3px;
+        opacity: 1;
+    }
+}
+
+/* Focus States */
+.btnPrimary:focus,
+.btnSecondary:focus,
+.navBtn:focus,
+.dot:focus {
+    outline: 2px solid var(--primary-cyan);
+    outline-offset: 2px;
+}
+
+/* Hover Effects for Touch Devices */
+@media (hover: none) {
+
+    .btnPrimary:hover,
+    .btnSecondary:hover,
+    .navBtn:hover,
+    .dot:hover,
+    .posterFrame:hover {
+        transform: none;
+    }
+
+    .btnPrimary:active {
+        transform: scale(0.95);
+    }
+
+    .btnSecondary:active {
+        transform: scale(0.95);
+    }
+
+    .navBtn:active {
+        transform: scale(0.9);
+    }
+}

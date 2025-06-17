@@ -1,41 +1,22 @@
-"use server"
 import { load } from 'cheerio';
+import axios from 'axios';
 import { NextResponse } from 'next/server';
-
+import { parseAnimeList } from '../../../utils/parsers/parse'; 
 
 export const POST = async (request: Request) => {
-    
     const { page } = await request.json()
-    // console.log("Page Param:", page);
     const pageParam = page;
 
-
-    const ajaxUrl = `${process.env.Next_AJAXURL}`;
-    const baseUrl = `${process.env.NEXT_BASEURL}`;
+    const baseUrl = '';
 
     const fetchTopAiring = async (page: number = 1): Promise<any> => {
         try {
-            const response = await fetch(`${ajaxUrl}/page-recent-release-ongoing.html?page=${page}`);
-            const data = await response.text();
+            const response = await axios.get(`${baseUrl}/browser?keyword=&sort=updated_date&language%5B%5D=dub&page=${page}`);
+            const $ = load(response.data);
 
-            const $ = load(data);
+            const topAiring=parseAnimeList($)
 
-            const topAiring: any[] = [];
-
-            $('div.added_series_body.popular > ul > li').each((i, el) => {
-                topAiring.push({
-                    id: $(el).find('a:nth-child(1)').attr('href')?.split('/')[2]!,
-                    title: $(el).find('a:nth-child(1)').attr('title')!,
-                    image: $(el).find('a:nth-child(1) > div').attr('style')?.match('(https?://.*.(?:png|jpg))')![0],
-                    url: `${baseUrl}${$(el).find('a:nth-child(1)').attr('href')}`,
-                    genres: $(el)
-                        .find('p.genres > a')
-                        .map((i, el) => $(el).attr('title'))
-                        .get(),
-                });
-            });
-
-            const hasNextPage = !$('div.anime_name.comedy > div > div > ul > li').last().hasClass('selected');
+            const hasNextPage = $('ul.pagination li.active + li').length > 0;
 
             return {
                 currentPage: page,
@@ -49,6 +30,7 @@ export const POST = async (request: Request) => {
 
     try {
         const topAiring = await fetchTopAiring(Number(pageParam));
+        console.log(topAiring);
         return new NextResponse(JSON.stringify(topAiring), { status: 201 })
     } catch (error) {
         console.error('Error fetching top airing anime:', error);
@@ -56,4 +38,3 @@ export const POST = async (request: Request) => {
     }
 };
 
-// export default POST;

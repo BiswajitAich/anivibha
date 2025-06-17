@@ -1,0 +1,316 @@
+/* Container panel */
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    backdrop-filter: blur(12px);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow:
+        0 0 10px rgba(0, 255, 255, 0.1),
+        0 0 20px rgba(139, 0, 255, 0.05);
+    overflow: hidden;
+}
+
+/* Subtle animated border glow around container */
+.container::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 12px;
+    background: linear-gradient(60deg, var(--primary-purple), var(--primary-cyan), var(--primary-pink), var(--primary-purple));
+    background-size: 300% 300%;
+    animation: borderGlow 5s linear infinite;
+    z-index: -1;
+    opacity: 0.4;
+    filter: blur(4px);
+}
+
+/* Keyframes for border glow */
+@keyframes borderGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Header: title + tabs */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Main title text */
+.headerTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-shadow: 0 0 6px var(--primary-purple);
+}
+
+/* Tabs container */
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Single tab */
+.tabItem {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+    position: relative;
+}
+
+/* Active tab */
+.tabItemActive {
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.6);
+    text-shadow: 0 0 4px var(--primary-cyan);
+}
+
+/* Optional underline/sliding indicator for active tab */
+.tabItemActive::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: var(--primary-cyan);
+    box-shadow: 0 0 6px var(--primary-cyan);
+    border-radius: 1px;
+}
+
+.itemClass {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+    background: #0000002b;
+    backdrop-filter: drop-shadow(inset 0px 0px 6px var(--primary-pink)) blur(5px);
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+}
+
+.itemClass:hover {
+    border: 2px solid var(--accent-green);
+    box-shadow: var(--glow-intensity);
+}
+
+.itemClass:hover .thumbnail {
+    transform: scale(1.4);
+}
+
+/* List of items */
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 100dvh;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+}
+
+/* Custom scrollbar for the list */
+.list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: var(--primary-cyan);
+    border-radius: 3px;
+    box-shadow: 0 0 6px var(--primary-cyan);
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-purple);
+}
+
+/* Single item row */
+.item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    position: relative;
+}
+
+/* Hover effect for item */
+.item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+/* Rank number */
+.rank {
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 28px;
+    flex-shrink: 0;
+    text-align: center;
+    color: var(--accent-green);
+    text-shadow: 0 0 4px var(--accent-green);
+}
+
+/* Thumbnail wrapper */
+.thumbnailWrapper {
+    position: relative;
+    width: 50px;
+    aspect-ratio: 3/4;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 0 6px rgba(0, 255, 255, 0.1);
+}
+
+/* Thumbnail image */
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+/* Zoom thumbnail on item hover */
+.item:hover .thumbnail {
+    transform: scale(1.1);
+}
+
+/* Info section: title + badges + stats */
+.info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+    position: relative;
+    height: 100%;
+    /* justify-content: center; */
+}
+
+/* Title row */
+.itemTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-shadow: 0 0 4px var(--primary-purple);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.extraInfo {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--glass-bg);
+    border-radius: 0.2rem;
+    padding: 0 1px 0 1px;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    border: 1px solid var(--text-secondary);
+}
+
+.subCount,
+.dubCount {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-right: 2px;
+    border-right: 2px solid;
+}
+
+.dubCount {
+    color: var(--accent-green);
+}
+
+.epsCount {
+    color: var(--primary-cyan);
+}
+
+.dot {
+    margin-left: 4px;
+    margin-right: 4px;
+    min-height: 4px;
+    min-width: 4px;
+    border-radius: 1rem;
+    background-color: var(--text-primary);
+}
+
+/* .itemType {}
+
+.duration {} */
+
+/* Optional animation for newly loaded item */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.item {
+    animation: fadeInSlide 0.4s ease both;
+}
+
+/* Responsive: if container narrower */
+@media (max-width: 350px) {
+    .container {
+        padding: 0.8rem;
+    }
+
+    .thumbnailWrapper {
+        width: 40px;
+        height: 40px;
+    }
+
+    .rank {
+        width: 24px;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        max-width: 100%;
+    }
+}
