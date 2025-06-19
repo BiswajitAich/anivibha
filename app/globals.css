@@ -49,6 +49,11 @@
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+    *:hover {
+        transform: none;
+    }
+}
 
 html,
 body {

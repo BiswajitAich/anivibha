@@ -1,8 +1,8 @@
-import SearchEpisodes from "../../anime/SearchEpisodes";
 import styles from "@/app/css/header.module.css";
 import logo from '@/public/anivibha-logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
+import SearchEpisodes from "../../search/SearchEpisodes";
 const Header = () => {
     return (
         <div className={styles.header}>

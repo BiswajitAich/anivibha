@@ -44,9 +44,11 @@
 .bgImage.active {
     opacity: 1;
 }
+
 .transitioning {
     opacity: 1;
 }
+
 .bgImage.transitioning {
     opacity: 0.7;
 }
@@ -601,6 +603,14 @@
 }
 
 @media screen and (max-width: 480px) {
+    .bannerContainer {
+        height: calc(100vh - 200px);
+    }
+
+    .bannerBackground {
+        height: calc(100vh - 200px);
+    }
+
     .bannerContent {
         padding: 0.8rem;
     }
@@ -673,25 +683,6 @@
     }
 }
 
-/* Performance optimizations for touch devices */
-/* @media (hover: none) {
-    .btnPrimary:hover,
-    .navBtn:hover,
-    .dot:hover,
-    .posterFrame:hover {
-        transform: none;
-    }
-
-    .btnPrimary:active {
-        transform: scale(0.95);
-    }
-
-    .navBtn:active {
-        transform: scale(0.9);
-    }
-} */
-
-
 /* Focus states for accessibility */
 .btnPrimary:focus,
 .navBtn:focus,
@@ -699,15 +690,3 @@
     outline: 2px solid var(--primary-cyan);
     outline-offset: 2px;
 }
-
-/* High contrast mode support */
-/* @media (prefers-contrast: high) {
-    .infoPanel {
-        border-width: 2px;
-        background: rgba(0, 0, 0, 0.9);
-    }
-
-    .btnPrimary {
-        border-width: 2px;
-    }
-} */

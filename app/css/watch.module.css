@@ -8,7 +8,7 @@
   background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
   color: var(--text-primary);
   overflow-x: hidden;
-  padding-top: 100px;
+  /* padding-top: 100px; */
 }
 
 /* Animated Background */
@@ -1089,9 +1089,9 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .watchContainer {
+  /* .watchContainer {
     padding: 75px 0.5rem;
-  }
+  } */
 
   .mainTitle {
     font-size: 2rem;

@@ -276,7 +276,7 @@
 .duration {} */
 
 /* Optional animation for newly loaded item */
-@keyframes fadeInSlide {
+/* @keyframes fadeInSlide {
     from {
         opacity: 0;
         transform: translateX(-10px);
@@ -290,9 +290,8 @@
 
 .item {
     animation: fadeInSlide 0.4s ease both;
-}
+} */
 
-/* Responsive: if container narrower */
 @media (max-width: 350px) {
     .container {
         padding: 0.8rem;

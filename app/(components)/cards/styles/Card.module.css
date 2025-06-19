@@ -92,19 +92,33 @@
 /* Meta row: type & duration */
 .meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: space-between;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 4%;
+    opacity: 0;
+    z-index: 3;
+    row-gap: 0.5rem;
+    transition: opacity 0.3s ease;
 }
 
 .type,
 .duration {
-    border: 1px solid var(--primary-purple);
-    border-radius: 0.5rem;
-    text-transform: uppercase;
-    color: var(--primary-purple);
-    padding: .1rem 5%;
-    font-size: .8rem;
+    color: var(--bg-dark);
+    border-radius: 15px;
+    margin-bottom: 2%;
+    padding: .2rem .4rem;
+    font-size: .6rem;
+    font-weight: 600;
+}
+
+.type {
+    background: var(--primary-cyan);
+}
+
+.duration {
+    background: var(--primary-pink);
 }
 
 /* Ratings / sub/dub */
@@ -181,19 +195,26 @@
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.1;
+    opacity: 0;
     transition: opacity 0.5s ease;
     pointer-events: none;
-    background: radial-gradient(circle at center, transparent 70%, black 80%);
+    /* background: radial-gradient(circle at center, transparent 70%, black 80%); */
     backdrop-filter: blur(0.5px);
 }
 
 .card:hover .recGlow {
-    /* opacity: 0.1; */
-    background: radial-gradient(circle at center, var(--primary-cyan) 0%, transparent 50%, black 90%);
+    opacity: 0.5;
     backdrop-filter: blur(0px);
+    background: radial-gradient(circle, #00393975 60%, #000 80%);
 }
 
+.card:hover {
+    border: 1px solid var(--primary-purple);
+}
+
+.card:hover .meta {
+    opacity: 1;
+}
 
 @media (max-width: 480px) {
     .wrapper {
