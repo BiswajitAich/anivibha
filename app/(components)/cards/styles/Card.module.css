@@ -1,0 +1,211 @@
+/* Card */
+.card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* box-shadow: 0 0 10px var(--primary-cyan); */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 300px;
+    width: 100%;
+}
+
+.card:hover {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: 0 0 20px var(--primary-purple);
+}
+
+/* Image wrapper: maintain aspect ratio */
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+}
+
+.imageWrapper img,
+.imageWrapper :global(img) {
+    color: transparent;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image {
+    object-fit: cover;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .image {
+    transform: scale(1.1);
+}
+
+/* Info section */
+.info {
+    padding: 0.2rem 1rem 0.5rem 1rem;
+    transition: none;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-evenly;
+    position: relative;
+}
+
+/* Title */
+.name,
+.jpName {
+    font-family: 'Nunito', sans-serif;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 1.5;
+}
+
+.name {
+    font-size: clamp(1.1rem, 5dvw, 0.8rem);
+    color: var(--text-primary);
+    text-shadow: 0 0 5px var(--primary-pink);
+    border-bottom: 1px solid var(--glass-border);
+    max-height: 3.5rem;
+    height: 100%;
+}
+
+/* Japanese name in smaller text */
+.jpName {
+    font-family: 'Bangers', cursive;
+    color: var(--text-secondary);
+    margin-bottom: .5rem;
+    font-size: .9rem;
+    max-height: 3rem;
+}
+
+/* Meta row: type & duration */
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+}
+
+.type,
+.duration {
+    border: 1px solid var(--primary-purple);
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+    color: var(--primary-purple);
+    padding: .1rem 5%;
+    font-size: .8rem;
+}
+
+/* Ratings / sub/dub */
+.ratings {
+    display: flex;
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    position: absolute;
+    top: -21px;
+    width: 100%;
+    left: 0;
+    max-height: 1.3rem;
+    overflow: hidden;
+    gap: 2%;
+}
+
+.sub,
+.dub,
+.eps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0.5rem;
+    background: var(--glass-bg);
+    min-width: fit-content;
+    padding: .1rem 4%;
+}
+
+.sub {
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+    text-shadow: 0 0 5px var(--accent-green);
+}
+
+.dub {
+    border: 1px solid var(--primary-cyan);
+    color: var(--primary-cyan);
+    text-shadow: 0 0 5px var(--primary-cyan);
+}
+
+.eps {
+    border: 1px solid var(--primary-pink);
+    color: var(--text-secondary);
+    text-shadow: 0 0 5px var(--text-primary);
+}
+
+/* Episodes and rating if present */
+/* .eps {
+    font-size: 0.85rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+} */
+
+.rate {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-weight: 800;
+    border-radius: 4px;
+    padding: 0 2px 0 2px;
+    box-shadow: 0 0 2px;
+    color: var(--bg-darker);
+    background: var(--primary-pink);
+    border: 1px solid;
+}
+
+/* glow */
+.recGlow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 70%, black 80%);
+    backdrop-filter: blur(0.5px);
+}
+
+.card:hover .recGlow {
+    /* opacity: 0.1; */
+    background: radial-gradient(circle at center, var(--primary-cyan) 0%, transparent 50%, black 90%);
+    backdrop-filter: blur(0px);
+}
+
+
+@media (max-width: 480px) {
+    .wrapper {
+        padding: 1rem;
+    }
+
+    .pageTitle {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .info {
+        padding: 0.75rem;
+    }
+}

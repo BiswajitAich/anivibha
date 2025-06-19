@@ -10,7 +10,7 @@ interface PageProps {
 const Watch = async ({ params, searchParams }: PageProps) => {
     // Await both params and searchParams
     const { id } = await params;
-    const awaitedSearchParams = await searchParams;
+    const searchParamsType = await searchParams;
 
     if (typeof id !== "string") {
         throw new Error("Invalid or missing series ID.");
@@ -25,7 +25,7 @@ const Watch = async ({ params, searchParams }: PageProps) => {
         <>
             <WatchComponent
                 info={info}
-                type={awaitedSearchParams?.type}
+                type={searchParamsType?.type}
                 paramsId={id}
             />
         </>

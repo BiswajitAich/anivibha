@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export const GET = async () => {
     const baseUrl = process.env.ANIME_BASEURL;
-    if(!baseUrl) throw new Error("API not found!");
+    if (!baseUrl) throw new Error("API not found!");
     const ob = new AnimeClass(baseUrl);
     try {
         const info = await ob.fetchBannerData();
@@ -13,7 +13,10 @@ export const GET = async () => {
         return NextResponse.json({ info });
     } catch (error) {
         console.error('Banner data err:', error);
-        throw new Error('Banner data fetch failed.');
+        return NextResponse.json({
+            error: 'Failed to fetch banner data',
+            info: [],
+        }, { status: 500 });
     }
 }
 

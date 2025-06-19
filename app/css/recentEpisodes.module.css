@@ -11,14 +11,14 @@
     flex: 1;
 }
 
-.recentEpisodesContainer h2 {
+/* .recentEpisodesContainer h2 {
     background: linear-gradient(45deg, var(--primary-cyan), var(--primary-purple), var(--primary-pink));
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
     margin-bottom: .5rem;
     font-size: clamp(1rem, 5vw, 2.5rem);
-}
+} */
 
 .line {
     width: 20%;
@@ -27,6 +27,7 @@
     backdrop-filter: drop-shadow(0px 0px 15px var(--primary-pink));
     animation: scaleShift 5s ease-in-out infinite;
     transition: all 1s ease;
+    margin-bottom: 0.5rem;
 }
 
 @keyframes scaleShift {
@@ -65,12 +66,18 @@
     font-size: 1rem;
 }
 
+
 .activeBtn {
     background: var(--accent-green);
     color: var(--bg-darker);
     box-shadow: none;
 }
 
+.btn:hover :not(.activeBtn) {
+    color: var(--primary-cyan);
+    background: var(--glass-bg);
+    box-shadow: inset var(--glow-intensity), 0 0 5px var(--primary-cyan);
+}
 /* -------- */
 .episodesDiv {
     place-content: flex-start center;
@@ -82,7 +89,32 @@
     justify-items: center;
 }
 
-.episodes {
+.head {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0 0.5rem 0;
+}
+
+.viewMoreBtn {
+    position: absolute;
+    right: 0;
+    color: var(--text-secondary);
+    background: var(--glass-border);
+    border: 1px solid;
+    padding: 0.1rem;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    width: 2.5rem;
+}
+
+.viewMoreBtn:hover {
+    color: var(--glass-bg);
+    background: var(--primary-cyan);
+    box-shadow: inset var(--glow-intensity), 0 0 5px var(--primary-cyan);
+}
+
+/* .episodes {
     max-width: 250px;
     background-color: black;
     position: relative;
@@ -197,7 +229,7 @@
 
 .episodes:hover .hover {
     opacity: 0.2;
-}
+} */
 
 
 @media screen and (min-width: 600px) {

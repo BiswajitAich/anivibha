@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styles from "@/app/css/bannerContainer.module.css";
 import dubcc from "@/public/icons/microphone.svg";
 import cc from "@/public/icons/subtitle.svg";
@@ -11,51 +11,66 @@ const BannerContainer = ({ props }: { props: any }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [isTransitioning, setIsTransitioning] = useState(false);
-    const animeData = props?.info || [];
+    const [imageLoadErrors, setImageLoadErrors] = useState<Record<number, boolean>>({});
 
-    useEffect(() => {
-        if (animeData.length > 0) {
-            setIsLoading(false);
-            const interval = setInterval(() => {
-                handleAutoTransition();
-            }, 6000);
-            return () => clearInterval(interval);
-        }
-    }, [animeData.length]);
+    const animeData = useMemo(() => props?.info || [], [props?.info]);
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-    const handleAutoTransition = () => {
+    const handleAutoTransition = useCallback(() => {
+        if (isTransitioning) return;
+
         setIsTransitioning(true);
         setTimeout(() => {
             setCurrentIndex((prev) => (prev + 1) % animeData.length);
             setIsTransitioning(false);
-        }, 300);
-    };
+        }, 400);
+    }, [animeData.length, isTransitioning]);
 
-    const handleDotClick = (index: number) => {
-        if (index !== currentIndex) {
+    useEffect(() => {
+        if (animeData.length > 0) {
+            setIsLoading(false);
+            intervalRef.current = setInterval(() => {
+                handleAutoTransition();
+            }, 8000);
+            return () => {
+                if (intervalRef.current) clearInterval(intervalRef.current);
+            };
+        }
+    }, [animeData.length, handleAutoTransition]);
+
+    const handleDotClick = useCallback((index: number) => {
+        if (index !== currentIndex && !isTransitioning) {
             setIsTransitioning(true);
             setTimeout(() => {
                 setCurrentIndex(index);
                 setIsTransitioning(false);
             }, 300);
         }
-    };
+    }, [currentIndex, isTransitioning]);
 
-    const handleNext = () => {
-        setIsTransitioning(true);
-        setTimeout(() => {
-            setCurrentIndex((prev) => (prev + 1) % animeData.length);
-            setIsTransitioning(false);
-        }, 300);
-    };
+    const handleNext = useCallback(() => {
+        if (!isTransitioning) {
+            setIsTransitioning(true);
+            setTimeout(() => {
+                setCurrentIndex((prev) => (prev + 1) % animeData.length);
+                setIsTransitioning(false);
+            }, 300);
+        }
+    }, [animeData.length, isTransitioning]);
 
-    const handlePrev = () => {
-        setIsTransitioning(true);
-        setTimeout(() => {
-            setCurrentIndex((prev) => (prev - 1 + animeData.length) % animeData.length);
-            setIsTransitioning(false);
-        }, 300);
-    };
+    const handlePrev = useCallback(() => {
+        if (!isTransitioning) {
+            setIsTransitioning(true);
+            setTimeout(() => {
+                setCurrentIndex((prev) => (prev - 1 + animeData.length) % animeData.length);
+                setIsTransitioning(false);
+            }, 300);
+        }
+    }, [animeData.length, isTransitioning]);
+
+    const handleImageError = useCallback((index: number) => {
+        setImageLoadErrors(prev => ({ ...prev, [index]: true }));
+    }, []);
 
     if (isLoading || animeData.length === 0) {
         return (
@@ -71,34 +86,21 @@ const BannerContainer = ({ props }: { props: any }) => {
 
     return (
         <div className={styles.bannerContainer}>
-            {/* Animated Background Particles */}
-            <div className={styles.particleField}>
-                {[...Array(50)].map((_, i) => (
-                    <div
-                        key={i}
-                        className={`${styles.particle} ${styles[`particle${i % 4}`]}`}
-                        style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
-                            animationDelay: `${Math.random() * 4}s`,
-                            animationDuration: `${4 + Math.random() * 4}s`
-                        }}
-                    />
-                ))}
-            </div>
-
-            {/* Background Images with Enhanced Transitions */}
+            {/* Simplified Background Images */}
             <div className={styles.bannerBackground}>
                 {animeData.map((anime: any, index: number) => (
                     <div
                         key={anime.id}
-                        className={`${styles.bgImage} ${
-                            index === currentIndex ? styles.active : ''
-                        } ${isTransitioning ? styles.transitioning : ''}`}
-                        style={{ backgroundImage: `url(${anime.url})` }}
+                        className={`
+                            ${styles.bgImage} ${index === currentIndex ? styles.active : ''} 
+                            ${isTransitioning ? styles.transitioning : ''}
+                            `}
+                        style={{
+                            backgroundImage: !imageLoadErrors[index] ? `url(${currentAnime.url})` : 'none',
+                            backgroundColor: imageLoadErrors[index] ? '#1a1a2e' : 'transparent'
+                        }}
                     >
                         <div className={styles.bgOverlay}></div>
-                        <div className={styles.scanlines}></div>
                     </div>
                 ))}
             </div>
@@ -134,24 +136,19 @@ const BannerContainer = ({ props }: { props: any }) => {
 
                             <div className={styles.animeActions}>
                                 <Link href={{ pathname: `/watch/${currentAnime.animeId}` }} className={styles.btnPrimary}>
-                                    <div className={styles.btnGlow}></div>
                                     <span className={styles.btnIcon}>▶</span>
-                                    <span className={styles.btnText}>INITIATE STREAM</span>
+                                    <span className={styles.btnText}>WATCH NOW</span>
                                 </Link>
-                                {/* <button className={styles.btnSecondary}>
-                                    <span className={styles.btnIcon}>+</span>
-                                    <span className={styles.btnText}>ADD TO QUEUE</span>
-                                </button> */}
                             </div>
 
                             <div className={styles.animeBadges}>
                                 <div className={styles.badge}>
-                                    <Image src={cc} height={16} width={16} className={styles.badgeIcon} alt="" />
-                                    <span className={styles.badgeText}>{currentAnime.sub} SUB</span>
+                                    <Image src={cc} height={14} width={14} className={styles.badgeIcon} alt="Subtitles" />
+                                    <span className={styles.badgeText}>{currentAnime.sub || 0} SUB</span>
                                 </div>
                                 <div className={styles.badge}>
-                                    <Image src={dubcc} height={16} width={16} className={styles.badgeIcon} alt="" />
-                                    <span className={styles.badgeText}>{currentAnime.dub} DUB</span>
+                                    <Image src={dubcc} height={14} width={14} className={styles.badgeIcon} alt="Dubbed" />
+                                    <span className={styles.badgeText}>{currentAnime.dub || 0} DUB</span>
                                 </div>
                             </div>
                         </div>
@@ -165,42 +162,51 @@ const BannerContainer = ({ props }: { props: any }) => {
                                     src={currentAnime.url}
                                     alt={currentAnime.name}
                                     className={styles.posterImage}
+                                    onError={() => handleImageError(currentIndex)}
+                                    loading="lazy"
                                 />
-                                {/* <div className={styles.posterOverlay}>
-                                    <div className={styles.scanEffect}></div>
-                                </div> */}
                             </div>
-                            {/* <div className={styles.posterGlow}></div> */}
-                            <div className={styles.hologramEffect}></div>
                         </div>
                     </div>
                 </div>
 
-                {/* Enhanced Navigation Controls */}
+                {/* Navigation Controls */}
                 <div className={styles.bannerControls}>
                     <div className={styles.controlsWrapper}>
-                        <button className={styles.navBtn} onClick={handlePrev}>
+                        <button
+                            className={styles.navBtn}
+                            onClick={handlePrev}
+                            disabled={isTransitioning}
+                            aria-label="Previous anime"
+                        >
                             <span className={styles.navIcon}>‹</span>
                         </button>
 
                         <div className={styles.dotsContainer}>
-                            {animeData.map((_: any, index: number) => (
+                            {animeData.slice(0, animeData.length).map((_: any, index: number) => (
                                 <button
                                     key={index}
                                     className={`${styles.dot} ${index === currentIndex ? styles.active : ''}`}
                                     onClick={() => handleDotClick(index)}
+                                    disabled={isTransitioning}
+                                    aria-label={`Go to anime ${index + 1}`}
                                 >
                                     <div className={styles.dotCore}></div>
                                 </button>
                             ))}
                         </div>
 
-                        <button className={styles.navBtn} onClick={handleNext}>
+                        <button
+                            className={styles.navBtn}
+                            onClick={handleNext}
+                            disabled={isTransitioning}
+                            aria-label="Next anime"
+                        >
                             <span className={styles.navIcon}>›</span>
                         </button>
                     </div>
 
-                    {/* Progress Indicator */}
+                    {/* Simplified Progress Indicator */}
                     <div className={styles.progressContainer}>
                         <div className={styles.progressBar}>
                             <div
@@ -215,14 +221,6 @@ const BannerContainer = ({ props }: { props: any }) => {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            {/* Futuristic HUD Elements */}
-            <div className={styles.hudOverlay}>
-                <div className={styles.hudCorner} data-position="top-left"></div>
-                <div className={styles.hudCorner} data-position="top-right"></div>
-                <div className={styles.hudCorner} data-position="bottom-left"></div>
-                <div className={styles.hudCorner} data-position="bottom-right"></div>
             </div>
         </div>
     );
