@@ -1,8 +1,8 @@
-import styles from "@/app/css/header.module.css";
+import styles from "@/app/(components)/header/styles/header.module.css";
 import logo from '@/public/anivibha-logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
-import SearchEpisodes from "../../search/SearchEpisodes";
+import SearchEpisodes from "../search/SearchEpisodes";
 const Header = () => {
     return (
         <div className={styles.header}>
@@ -20,7 +20,7 @@ const Header = () => {
                 </Link>
                 <SearchEpisodes />
             </div>
-            <span className={styles.headerLine}/>
+            <span className={styles.headerLine} />
         </div>
     );
 }

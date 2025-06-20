@@ -1,18 +1,20 @@
 "use client"
-import styles from "../css/watch.module.css"
+import styles from "./styles/watch.module.css"
 import { useEffect, useMemo, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LoadingComponent from "@/app/(components)/LoadingComponent/page";
 import LoadingText from "@/app/(components)/LoadingComponent/LoadingText";
 import { Episode, RecommendedItem, SeriesInfo } from "@/app/api/types/seriesInfo";
+// images
 import playBtn from "@/public/icons/play-button.svg"
 import subtitle from "@/public/icons/subtitle.svg"
 import microphone from "@/public/icons/microphone.svg"
+
 import axios from "axios";
 import { Servers } from "@/app/api/types/servers";
-import Header from "@/app/(components)/home/(Anime)/Header";
 import { initializeConsoleProtection } from "../utils/protection/consoleProtection";
+
 
 
 const WatchComponent = ({ info, type, paramsId }: { info: SeriesInfo, type: string | undefined, paramsId: string }) => {
@@ -25,6 +27,7 @@ const WatchComponent = ({ info, type, paramsId }: { info: SeriesInfo, type: stri
     const [videoLoading, setVideoLoading] = useState(false);
     const [videoSource, setVideoSource] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState<string>('');
+    const [seeMoreOrLess, setSeeMoreOrLess] = useState<{ [key: string]: boolean }>({});
 
     const groupSize: number = 10;
     const [groupIndex, setGroupIndex] = useState<number>(0);
@@ -223,9 +226,15 @@ const WatchComponent = ({ info, type, paramsId }: { info: SeriesInfo, type: stri
         }
     }, [selectedEpisodeId, subOrDub]);
 
+    function handleSeeButton(section: string) {
+        setSeeMoreOrLess(prev => ({
+            ...prev,
+            [section]: !prev[section],
+        }));
+    }
+
     return (
         <div className={styles.watchContainer}>
-            <Header />
             {/* Animated Background */}
             <div className={styles.animatedBg}>
                 <div className={styles.gridOverlay}></div>
@@ -402,7 +411,12 @@ const WatchComponent = ({ info, type, paramsId }: { info: SeriesInfo, type: stri
                             </div>
 
                             {/* Episodes */}
-                            <div className={styles.episodesGrid}>
+                            {(Number(info.episodes.length) > 5) &&
+                                <button className='seeSection' onClick={() => handleSeeButton('episodes')}>See
+                                    {seeMoreOrLess['episodes'] ? <p> Less -</p> : <p> More +</p>}
+                                </button>
+                            }
+                            <div className={`${styles.episodesGrid} ${seeMoreOrLess['episodes'] ? 'expandHeight' : ''}`} >
                                 {groups[groupIndex]?.map((episode: Episode) => (
                                     <button
                                         key={episode.id}
@@ -444,7 +458,13 @@ const WatchComponent = ({ info, type, paramsId }: { info: SeriesInfo, type: stri
 
                     {/* Meta Information */}
                     <div className={styles.metaSection}>
-                        <div className={styles.metaGrid}>
+                        <h3 className={styles.sectionTitle}>
+                            <span className={styles.titleGlow}>META INFORMATION</span>
+                        </h3>
+                        <button className='seeSection' onClick={() => handleSeeButton('meta')}>See
+                            {seeMoreOrLess['meta'] ? <p> Less -</p> : <p> More +</p>}
+                        </button>
+                        <div className={`${styles.metaGrid} ${seeMoreOrLess['meta'] ? 'expandHeight' : ''}`}>
                             {info.rate && (
                                 <div className={styles.metaItem}>
                                     <span className={styles.metaLabel}>RATING</span>
@@ -537,7 +557,11 @@ const WatchComponent = ({ info, type, paramsId }: { info: SeriesInfo, type: stri
                             <h3 className={styles.sectionTitle}>
                                 <span className={styles.titleGlow}>SYNOPSIS</span>
                             </h3>
-                            <div className={styles.synopsisContent}>
+                            { }
+                            <button className='seeSection' onClick={() => handleSeeButton('synopsis')}>See
+                                {seeMoreOrLess['synopsis'] ? <p> Less -</p> : <p> More +</p>}
+                            </button>
+                            <div className={`${styles.synopsisContent} ${seeMoreOrLess['synopsis'] ? 'expandHeight' : ''}`}>
                                 <p>{info.info.overview}</p>
                                 <div className={styles.synopsisOverlay}></div>
                             </div>

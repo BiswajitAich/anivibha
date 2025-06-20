@@ -1,8 +1,11 @@
-import Header from "../(components)/home/(Anime)/Header";
+import dynamic from "next/dynamic";
+const Footer = dynamic(()=>import("../(components)/footer/Footer"));
+const Header = dynamic(()=>import("../(components)/header/Header"));
+const PageComponent = dynamic(()=>import("./PageComponent"));
+
 import { validPageCategory, validLanguageCategory, validSortCategory } from "../api/types/pageCategory";
 import { AnimePoster } from "../utils/parsers/parse2";
 import { fetchPageDataAction } from "./fetchPageDataAction";
-import PageComponent from "./PageComponent";
 import styles from '@/app/view/styles/View.module.css';
 interface PageProps {
     searchParams: Promise<{
@@ -51,6 +54,7 @@ const page = async ({ searchParams }: PageProps) => {
         <div className={styles.viewpage}>
             <Header />
             <PageComponent data={data} path={path} page={pageNum} language={language}/>
+            <Footer />
         </div>
     );
 }

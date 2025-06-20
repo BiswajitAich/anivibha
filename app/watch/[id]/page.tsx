@@ -1,6 +1,11 @@
-import WatchComponent from "../watchComponent";
 import { fetchInitialDataAction } from "../fetchInitialWatchDataAction";
 import { SeriesInfo } from "@/app/api/types/seriesInfo";
+
+// components
+import dynamic from "next/dynamic";
+const WatchComponent = dynamic(()=> import("../watchComponent"));
+const Footer = dynamic(()=> import("@/app/(components)/footer/Footer"));
+const Header = dynamic(()=> import("@/app/(components)/header/Header"));
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -23,11 +28,13 @@ const Watch = async ({ params, searchParams }: PageProps) => {
 
     return (
         <>
+            <Header />
             <WatchComponent
                 info={info}
                 type={searchParamsType?.type}
                 paramsId={id}
             />
+            <Footer />
         </>
     );
 };

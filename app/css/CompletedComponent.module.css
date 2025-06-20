@@ -129,9 +129,10 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    max-height: 100dvh;
-    overflow-y: auto;
-    padding-right: 0.25rem;
+    max-height: 40dvh;
+    overflow: hidden;
+    position: relative;
+    padding: 0.25rem;
 }
 
 /* Custom scrollbar for the list */
@@ -275,22 +276,6 @@
 
 .duration {} */
 
-/* Optional animation for newly loaded item */
-/* @keyframes fadeInSlide {
-    from {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.item {
-    animation: fadeInSlide 0.4s ease both;
-} */
 
 @media (max-width: 350px) {
     .container {

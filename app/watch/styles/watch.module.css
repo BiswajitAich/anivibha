@@ -422,14 +422,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
-  padding: 1.5rem;
+  padding: 1rem;
   background: var(--glass-bg);
   border-radius: 15px;
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(10px);
-  max-height: 40dvh;
-  overflow-y: auto;
-  overflow-x: hidden;
+  max-height: 100px;
+  overflow: hidden;
 }
 
 .metaItem {
@@ -630,19 +629,17 @@
 }
 
 .episodesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   grid-gap: 1rem;
-  gap: 1rem;
-  padding: 1.5rem;
   background: var(--glass-bg);
-  border-radius: 15px;
   border: 1px solid var(--glass-border);
-  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  max-height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  border-radius: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  gap: 1rem;
+  max-height: 40dvh;
+  padding: 1.5rem;
+  display: grid;
+  overflow: hidden;
 }
 
 
@@ -859,9 +856,8 @@
   line-height: 1.8;
   font-size: 1.1rem;
   color: var(--text-secondary);
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 40dvh;
+  overflow: hidden;
+  max-height: 100px;
 }
 
 .synopsisContent p {
@@ -1056,6 +1052,7 @@
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1067,6 +1064,7 @@
   line-height: 1.2;
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1087,6 +1085,8 @@
   opacity: 0.1;
 }
 
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
   /* .watchContainer {
@@ -1100,7 +1100,7 @@
   .metaGrid {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 0.8rem;
-    padding: 1rem;
+    padding: 0.3rem;
   }
 
   .typeButtons {
@@ -1114,8 +1114,7 @@
 
   .episodesGrid {
     gap: 0.3rem;
-    padding: 0.5rem;
-    max-height: 400px;
+    padding: .5rem;
   }
 
   .episodeBtn {
@@ -1133,7 +1132,7 @@
   }
 
   .synopsisContent {
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 50px;
     font-size: 1rem;
   }
 }
@@ -1158,6 +1157,6 @@
   }
 
   .recommendationsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
 }

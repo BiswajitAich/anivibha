@@ -17,11 +17,13 @@ const fetchSearchResults = async (keywords: string, page: number = 1): Promise<S
         return [];
     }
 }
+
 const SearchEpisodes = () => {
     const [displayInput, setDisplayInput] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>('');
     const [disabled, setDisabled] = useState<boolean>(false);
     const [searchResults, setSearchResults] = useState<SearchResults[] | []>([]);
+    const [isResultsSearched, setIsResultsSearched] = useState<boolean>(false);
 
     useEffect(() => {
         setDisplayInput(window.innerWidth > 768);
@@ -45,6 +47,7 @@ const SearchEpisodes = () => {
 
         if (!inputValue.trim()) {
             setInputValue('');
+            setSearchResults([]);
             if (window.innerWidth <= 768) {
                 setDisplayInput(false);
             }
@@ -53,9 +56,10 @@ const SearchEpisodes = () => {
         try {
             setInputValue('');
             setSearchResults(await fetchSearchResults(inputValue, 1));
+            setIsResultsSearched(true);
         } catch (error) {
             console.error('Error during search:', error);
-
+            setIsResultsSearched(false);
         }
         // setInputValue('');
         // setDisplayInput(false);
@@ -113,7 +117,7 @@ const SearchEpisodes = () => {
                             </li>
                         ))
                     ) : (
-                        <div className={styles.noResults}>No results found</div>
+                        <div className={styles.noResults} style={{ display: isResultsSearched ? 'block' : 'none' }}>No results found</div>
                     )}
                 </ul>
             </div>

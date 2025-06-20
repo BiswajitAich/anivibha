@@ -14,7 +14,7 @@ export const fetchPageDataAction = async (page?: string, category?: string, lang
 
         timeoutId = setTimeout(() => {
             controller?.abort();
-        }, 10000); // 10 seconds timeout
+        }, 10000); 
 
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/animePage`, {
@@ -29,9 +29,9 @@ export const fetchPageDataAction = async (page?: string, category?: string, lang
                 page,
                 sort
             }),
-            // next: {
-            //     revalidate: 60 * 60 * 1,
-            // },
+            next: {
+                revalidate: 60 * 60 * 1,
+            },
             // cache: 'no-store',
             signal
         });

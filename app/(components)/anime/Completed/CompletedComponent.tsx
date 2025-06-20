@@ -1,11 +1,16 @@
+'use client';
 import { AnimePoster } from "@/app/utils/parsers/parse2";
 import styles from '@/app/css/CompletedComponent.module.css';
 import Image from "next/image";
 import cc from "@/public/icons/subtitle.svg";
 import micriphone from "@/public/icons/microphone.svg";
 import Link from "next/link";
+import { useState } from "react";
 const CompletedComponent = ({ info }: { info: AnimePoster[] }) => {
-
+    const [seeMoreOrLess, setSeeMoreOrLess] = useState<boolean>(false);
+    function handleSeeButton() {
+        setSeeMoreOrLess(!seeMoreOrLess);
+    }
     return (
         <div className={styles.container}>
             {/* Header with title + tabs */}
@@ -13,10 +18,13 @@ const CompletedComponent = ({ info }: { info: AnimePoster[] }) => {
                 <div className={styles.headerTitle}>RECENTLY COMPLETE</div>
             </div>
 
+            <button className='seeSection' onClick={handleSeeButton}>See
+                {seeMoreOrLess ? <p> Less -</p> : <p> More +</p>}
+            </button>
             {/* List */}
-            <div className={styles.list}>
+            <div className={`${styles.list} ${seeMoreOrLess ? 'expandHeight' : ''}`}>
                 {info.map((item, idx) => (
-                    <Link href={`/watch/${item.animeId}`} key={idx} className={styles.itemClass} title={item.name}>
+                    <Link href={`/watch/${item.animeId}`} key={idx} className={styles.itemClass}>
                         <div className={styles.rank}>{idx + 1}</div>
                         <div className={styles.thumbnailWrapper}>
                             <img

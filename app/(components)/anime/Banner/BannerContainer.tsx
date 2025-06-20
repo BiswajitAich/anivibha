@@ -15,6 +15,7 @@ const BannerContainer = ({ props }: { props: any }) => {
 
     const animeData = useMemo(() => props?.info || [], [props?.info]);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const bannerRef = useRef<HTMLDivElement | null>(null);
 
     const handleAutoTransition = useCallback(() => {
         if (isTransitioning) return;
@@ -23,20 +24,40 @@ const BannerContainer = ({ props }: { props: any }) => {
         setTimeout(() => {
             setCurrentIndex((prev) => (prev + 1) % animeData.length);
             setIsTransitioning(false);
-        }, 400);
+        }, 500);
     }, [animeData.length, isTransitioning]);
 
     useEffect(() => {
         if (animeData.length > 0) {
             setIsLoading(false);
-            intervalRef.current = setInterval(() => {
-                handleAutoTransition();
-            }, 8000);
-            return () => {
-                if (intervalRef.current) clearInterval(intervalRef.current);
-            };
         }
+        if (!bannerRef.current || animeData.length === 0) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && entry.boundingClientRect.top <= 400) {
+                    intervalRef.current = setInterval(() => {
+                        handleAutoTransition();
+                    }, 5000);
+                } else {
+                    // Stop interval if moved out
+                    if (intervalRef.current) clearInterval(intervalRef.current);
+                }
+            },
+            {
+                root: null,
+                threshold: 0.8,
+            }
+        );
+
+        observer.observe(bannerRef.current);
+
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            observer.disconnect();
+        };
     }, [animeData.length, handleAutoTransition]);
+
 
     const handleDotClick = useCallback((index: number) => {
         if (index !== currentIndex && !isTransitioning) {
@@ -85,7 +106,7 @@ const BannerContainer = ({ props }: { props: any }) => {
     const currentAnime = animeData[currentIndex];
 
     return (
-        <div className={styles.bannerContainer}>
+        <div className={styles.bannerContainer} ref={bannerRef}>
             {/* Simplified Background Images */}
             <div className={styles.bannerBackground}>
                 {animeData.map((anime: any, index: number) => (
