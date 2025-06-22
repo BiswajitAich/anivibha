@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🌀 AniVibha — Anime Vibes Unleashed!
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-v15-blue?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue.svg?logo=typescript)
+![License](https://img.shields.io/badge/license-MIT-green)
+![CSS](https://img.shields.io/badge/styling-CSS-blue)
+![Status](https://img.shields.io/badge/project-Active-success)
 
-First, run the development server:
+> **Live Site:** 🌐 [anivibha.vercel.app](https://anivibha.vercel.app)  
+> **GitHub Repo:** [github.com/BiswajitAich/anivibha](https://github.com/BiswajitAich/anivibha)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📌 Project Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**AniVibha** is a futuristic, visually engaging anime streaming website built using **Next.js 15** and **TypeScript**.  
+It demonstrates **server-side web scraping** using public APIs to fetch real-time anime data and render it seamlessly on the frontend.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project is crafted **purely for educational and personal skill demonstration purposes** — no monetization, no ads, no user tracking.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Key Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🎨 **Modern UI/UX** with handcrafted CSS animations and transitions
+- ⚡ **Server-side data scraping** using Next.js API routes
+- 🔍 **Search**, **sort**, and **filter** anime content in real-time
+- 🚀 **Fully responsive** across devices with fluid layouts
+- 🧠 Built with **modular**, **type-safe**, and **scalable** code
+- 📦 Optimized assets with lazy loading and SEO meta configuration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🧠 Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Technology      | Usage                              |
+|-----------------|------------------------------------|
+| **Next.js 15**  | Full-stack React framework         |
+| **TypeScript**  | Strong typing and scalability      |
+| **CSS**         | Custom styling and responsiveness  |
+| **Vercel**      | Deployment and hosting             |
+| **Cheerio & Fetch** | Data scraping & parsing via API routes |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## 🔒 Disclaimer
+
+> This project **does not host or redistribute** any copyrighted content.
+
+- All data is scraped from publicly accessible sources via API solely for **educational demonstration**.
+- I do **not** claim ownership of the data displayed.
+- If you are a content owner and want something removed, kindly raise an issue and it will be handled respectfully.
+
+---
+
+## 🙋‍♂️ About the Developer
+
+**Biswajit Aich**  
+🎓 CSE Undergrad | 🔍 AI/ML & Full Stack Enthusiast  
+
+- 🌐 [LinkedIn](https://www.linkedin.com/in/biswajitaich/)
+- 💼 [Portfolio](https://portfolio-biswajit-aichs-projects.vercel.app/)
+- 📂 [GitHub](https://github.com/BiswajitAich)
+
+---
+
+## ⭐ Support & Contributions
+
+If you like this project or found it insightful:
+- ⭐ Star the repo  
+- 🛠 Suggest improvements via [GitHub Issues](https://github.com/BiswajitAich/anivibha/issues)  
+- 🤝 Feel free to fork and build on top of it!
+
+---
+
+## 📜 License
+
+Licensed under the **MIT License**. See `LICENSE` for details.
+
+---
