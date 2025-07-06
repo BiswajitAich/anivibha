@@ -1,12 +1,12 @@
 "use client";
 
 import { Suspense, useEffect, useState, useTransition } from "react";
-import LoadingComponent from "../../LoadingComponent/page";
 import style from "../../../css/recentEpisodes.module.css"
 import { fetchDataAction } from "./fetchDataAction";
 import Client from "./Client";
 import { AnimePoster } from "@/app/utils/parsers/parse2";
 import Link from "next/link";
+import CardLoader from "../../loadings/CardLoaders";
 
 const Display = ({ initialData }: { initialData: AnimePoster[] }) => {
     const [show, setShow] = useState<string>("");
@@ -52,7 +52,7 @@ const Display = ({ initialData }: { initialData: AnimePoster[] }) => {
     }
 
     if (!isInitialized) {
-        return <LoadingComponent />;
+        return <LoadingComponentDisplay />;
     }
 
     return (
@@ -83,9 +83,9 @@ const Display = ({ initialData }: { initialData: AnimePoster[] }) => {
                 </button>
             </div>
 
-            <Suspense fallback={<LoadingComponent />}>
+            <Suspense fallback={<LoadingComponentDisplay />}>
                 {isPending ? (
-                    <LoadingComponent />
+                    <LoadingComponentDisplay />
                 ) : (
                     <>
                         {show === "All" && <Client data={response} sel={undefined} />}
@@ -98,4 +98,13 @@ const Display = ({ initialData }: { initialData: AnimePoster[] }) => {
     );
 }
 
+const LoadingComponentDisplay = () => {
+    return (
+        <div className={style.episodesDiv}>
+            {Array.from({length: 32}, (_, idx) => (
+                <CardLoader key={idx}/>
+            ))}
+        </div>
+    )
+}
 export default Display;

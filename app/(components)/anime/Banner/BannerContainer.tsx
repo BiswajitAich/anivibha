@@ -179,9 +179,11 @@ const BannerContainer = ({ props }: { props: any }) => {
                     <div className={`${styles.animePoster} ${isTransitioning ? styles.fadeOut : styles.fadeIn}`}>
                         <div className={styles.posterContainer}>
                             <div className={styles.posterFrame}>
-                                <img
+                                <Image
                                     src={currentAnime.url}
                                     alt={currentAnime.name}
+                                    height={250}
+                                    width={300}
                                     className={styles.posterImage}
                                     onError={() => handleImageError(currentIndex)}
                                     loading="lazy"

@@ -1,0 +1,26 @@
+.card{
+    min-width: 100%;
+    background: var(--bg-darker);
+    aspect-ratio: 5 / 9;
+    border: 2px solid var(--glass-border);
+    border-radius: 0.3rem;
+    position: relative;
+    overflow: hidden;
+}
+.animation{
+    min-width: 50%;
+    background: #00ffff29;
+    min-height: 222%;
+    position: absolute;
+    transform: rotateZ(-45deg);
+    box-shadow: 0 0 4rem;
+    color: #00ffff57;
+    animation: slide 2s ease infinite;
+    left: -100%;
+    top: -50%;
+}
+
+@keyframes slide {
+    from{left: -100%}
+    to{left: 200%;}
+}

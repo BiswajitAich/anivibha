@@ -85,7 +85,8 @@ class AnimeClass {
                 console.error("HTML parsing failed. Response:", data);
                 return [];
             }
-
+            console.log(html);
+            
             const $ = load(html);
             return parseAnimeList2($);
         } catch (error) {

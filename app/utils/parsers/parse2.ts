@@ -27,7 +27,7 @@ export function parseAnimeList2($: CheerioAPI, len: number = Infinity): AnimePos
         const name = ele.find('.film-detail .film-name .dynamic-name').attr('title') ||
             ele.find('.film-detail .film-name .dynamic-name').text().trim() || '';
         const JapaneseName = ele.find('.film-detail .film-name .dynamic-name').attr('data-jname') || '';
-        const url = ele.find('.film-poster-img ').attr('data-src') || '';
+        const url = ele.find('.film-poster-img').attr('data-src') || '';
         const id = ele.find('.film-poster-ahref.item-qtip').attr('data-id');
         const animeId = ele.find('.film-poster-ahref.item-qtip').attr('href')?.replace('/', '') || '';
         const rate = ele.find('.film-poster .tick.tick-rate').text().trim() || '';

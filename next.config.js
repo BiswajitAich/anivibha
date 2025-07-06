@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: 'img.flawlessfiles.com',
+        hostname: 'cdn.noitatnemucod.net',
       }
     ],
   },
