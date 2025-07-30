@@ -12,6 +12,7 @@ export const GET = async (request: Request) => {
     }
 
     const baseUrl = process.env.ANIME_BASEURL;
+    const servers = process.env.SERVERS;
     if (!baseUrl) throw new Error("API not found!");
 
     const fetchEpisodeServers = async (episodeId: string) => {
@@ -19,7 +20,7 @@ export const GET = async (request: Request) => {
         const id = x[1];
 
         try {
-            const { data } = await axios.get(`${baseUrl}/ajax/episode/servers?episodeId=${id}`, {
+            const { data } = await axios.get(`${baseUrl}${servers}?episodeId=${id}`, {
                 headers: {
                     "Accept": "application/json, text/javascript, */*; q=0.01",
                     "Referer": `${baseUrl}/watch/${episodeId}`,

@@ -2,7 +2,8 @@
 import { parseSearchResults, SearchResults } from "@/app/utils/parsers/searchParser";
 import { load } from "cheerio";
 
-const baseUrl = `${process.env.ANIME_BASEURL}`;
+const baseUrl = process.env.ANIME_BASEURL;
+const search = process.env.SERACH;
 export const searchAction = async (keywords: string, page: number = 1): Promise<SearchResults[]> => {
     const keyword = keywords.trim();
 
@@ -12,9 +13,9 @@ export const searchAction = async (keywords: string, page: number = 1): Promise<
         searchParsms.append('page', String(page));
     }
     try {
-        console.log(`${baseUrl}/ajax/movie/search/suggest?${searchParsms.toString()}`);
+        console.log(`${baseUrl}${search}?${searchParsms.toString()}`);
 
-        const res = await fetch(`${baseUrl}/ajax/movie/search/suggest?${searchParsms.toString()}`, {
+        const res = await fetch(`${baseUrl}${search}?${searchParsms.toString()}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ export const searchAction = async (keywords: string, page: number = 1): Promise<
         }
         const json = await res.json();
         const html = json.html;
-        console.log(json);
+        // console.log(json);
         if (!html) {
             console.log('No HTML content found in the response');
             return [];

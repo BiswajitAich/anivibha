@@ -19,7 +19,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
         const ob = new AnimeClass(baseUrl);
         const info = await ob.fetchCompletedAnimeData(page);
 
-        console.log("api/GET fetchCompletedAnimeData: info:", info);
+        console.log("api/GET fetchCompletedAnimeData: info[0]:", info[0]);
 
         return NextResponse.json({ info: info || [] });
 
@@ -85,7 +85,7 @@ class AnimeClass {
                 console.error("HTML parsing failed. Response:", data);
                 return [];
             }
-            console.log(html);
+            // console.log(html);
             
             const $ = load(html);
             return parseAnimeList2($);
